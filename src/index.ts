@@ -3,10 +3,12 @@ import 'reflect-metadata'
 
 import { dirname, importx } from '@discordx/importer'
 import { exitHook } from '@lolpants/exit'
+import { field } from '@lolpants/jogger'
 import { Intents } from 'discord.js'
 import { Client } from 'discordx'
 import { join as joinPath } from 'node:path/posix'
 import { GUILD_ID, TOKEN } from '~/env.js'
+import { errorField, flush, logger, userField } from '~/logger.js'
 
 const client = new Client({
   silent: true,
@@ -21,6 +23,8 @@ const client = new Client({
 client.once('ready', async () => {
   await client.guilds.fetch()
   await client.initApplicationCommands()
+
+  logger.info(field('action', 'ready'), userField('user', client.user!))
 })
 
 client.on('interactionCreate', interaction => {
@@ -38,11 +42,15 @@ const run = async () => {
 }
 
 exitHook(async (exit, error) => {
-  if (error instanceof Error) {
-    console.error(error)
+  client.destroy()
+
+  if (error) {
+    logger.error(errorField(error))
+  } else {
+    logger.info(field('action', 'shutdown'))
   }
 
-  client.destroy()
+  await flush()
   exit()
 })
 
