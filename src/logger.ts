@@ -27,21 +27,7 @@ export const logger = createLogger({
   sink: [consoleSink, fileSink],
 })
 
-export const rootContext = createField('context')
-export const commandContext: (
-  ...args: Parameters<typeof createField>
-) => readonly [Readonly<Field>, Readonly<Field>] = (...args) => {
-  const ctx = rootContext(...args)
-  return [field('type', 'command'), ctx]
-}
-
-export const handlerContext: (
-  ...args: Parameters<typeof createField>
-) => readonly [Readonly<Field>, Readonly<Field>] = (...args) => {
-  const ctx = rootContext(...args)
-  return [field('type', 'handler'), ctx]
-}
-
+export const ctxField = createField('context')
 export const errorField: <T extends Error>(
   error: T
 ) => Readonly<Field> = error => {

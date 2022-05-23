@@ -4,6 +4,9 @@ import {
   type MessageContextMenuInteraction,
 } from 'discord.js'
 import { ContextMenu, Discord } from 'discordx'
+import { ctxField, errorField, logger } from '~/logger.js'
+
+const context = ctxField('pin')
 
 @Discord()
 export abstract class Pin {
@@ -52,19 +55,20 @@ export abstract class Pin {
       return
     }
 
+    const isPinned = message.pinned
     try {
-      const action = message.pinned ? 'Unpinned' : 'Pinned'
-      await (message.pinned ? message.unpin() : message.pin())
+      const action = isPinned ? 'Unpinned' : 'Pinned'
+      await (isPinned ? message.unpin() : message.pin())
 
       await interaction.reply({
         content: `${action} message.`,
       })
     } catch (error: unknown) {
       if (error instanceof Error) {
-        console.error(error)
+        logger.error(context, errorField(error))
       }
 
-      const action = message.pinned ? 'unpin' : 'pin'
+      const action = isPinned ? 'unpin' : 'pin'
       await interaction.reply({
         content: `Failed to ${action} message!\nCheck permissions and pin limit.`,
         ephemeral: true,
