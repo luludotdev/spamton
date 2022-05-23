@@ -5,8 +5,9 @@
   "main": "./build/index.js",
   "private": true,
   "scripts": {
-    "test": "yarn run check",
+    "test": "yarn run check && yarn run lint",
     "check": "yarn run compile --noEmit",
+    "lint": "xo ./src",
     "compile": "ttsc",
     "clean": "rimraf build",
     "build": "yarn run clean && yarn run compile",
@@ -22,7 +23,8 @@
     "rimraf": "^3.0.2",
     "ttypescript": "^1.5.13",
     "typescript": "^4.6.4",
-    "typescript-transform-paths": "^3.3.1"
+    "typescript-transform-paths": "^3.3.1",
+    "xo": "^0.49.0"
   },
   "dependencies": {
     "reflect-metadata": "^0.1.13",
