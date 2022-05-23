@@ -7,8 +7,9 @@ import { field } from '@lolpants/jogger'
 import { Intents } from 'discord.js'
 import { Client } from 'discordx'
 import { join as joinPath } from 'node:path/posix'
-import { GUILD_ID, TOKEN } from '~/env.js'
-import { errorField, flush, logger, userField } from '~/logger.js'
+import { GUILD_ID, IS_DEV, TOKEN } from '~/env.js'
+import { ctxField, errorField, flush, logger, userField } from '~/logger.js'
+import { getVersion } from '~/version.js'
 
 const client = new Client({
   silent: true,
@@ -24,7 +25,12 @@ client.once('ready', async () => {
   await client.guilds.fetch()
   await client.initApplicationCommands()
 
-  logger.info(field('action', 'ready'), userField('user', client.user!))
+  const guild = await client.guilds.fetch(GUILD_ID)!
+  logger.info(
+    field('action', 'ready'),
+    userField('user', client.user!),
+    field('guild', field('id', GUILD_ID), field('name', guild.name))
+  )
 })
 
 client.on('interactionCreate', interaction => {
@@ -32,6 +38,13 @@ client.on('interactionCreate', interaction => {
 })
 
 const run = async () => {
+  const version = await getVersion()
+  logger.info(
+    ctxField('boot'),
+    field('version', version),
+    field('environment', IS_DEV ? 'dev' : 'prod')
+  )
+
   const imports = joinPath(
     dirname(import.meta.url).replaceAll('\\', '/'),
     '/{handlers,commands}/**/*.{ts,js}'
