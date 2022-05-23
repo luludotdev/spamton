@@ -1,10 +1,17 @@
+import { field } from '@lolpants/jogger'
 import {
   DMChannel,
   GuildMember,
   type MessageContextMenuInteraction,
 } from 'discord.js'
 import { ContextMenu, Discord } from 'discordx'
-import { ctxField, errorField, logger } from '~/logger.js'
+import {
+  channelField,
+  ctxField,
+  errorField,
+  logger,
+  userField,
+} from '~/logger.js'
 
 const context = ctxField('pin')
 
@@ -57,12 +64,18 @@ export abstract class Pin {
 
     const isPinned = message.pinned
     try {
-      const action = isPinned ? 'Unpinned' : 'Pinned'
-      await (isPinned ? message.unpin() : message.pin())
+      const action = isPinned ? 'unpinned' : 'pinned'
 
-      await interaction.reply({
-        content: `${action} message.`,
-      })
+      await (isPinned ? message.unpin() : message.pin())
+      await interaction.reply({ content: `Message ${action}.` })
+
+      logger.info(
+        context,
+        field('action', action),
+        userField('user', interaction.user),
+        channelField('channel', channel),
+        field('message', message.id)
+      )
     } catch (error: unknown) {
       if (error instanceof Error) {
         logger.error(context, errorField(error))
