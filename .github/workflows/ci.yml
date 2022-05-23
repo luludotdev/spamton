@@ -60,7 +60,9 @@ jobs:
           tags: |
             ${{ steps.prepare.outputs.docker_image }}:latest
             ${{ steps.prepare.outputs.docker_image }}:${{ steps.prepare.outputs.version }}
-          build-args: GIT_REPO=${{ steps.prepare.outputs.git_repo }}
+          build-args: |
+            GIT_VERSION=${{ steps.prepare.outputs.version }}
+            GIT_REPO=${{ steps.prepare.outputs.git_repo }}
           cache-from: type=gha
           cache-to: type=gha,mode=max
           platforms: linux/amd64,linux/arm64

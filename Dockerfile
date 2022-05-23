@@ -47,7 +47,10 @@ RUN mkdir /app/logs && \
 USER nodejs
 VOLUME ["/app/logs"]
 
+ARG GIT_VERSION
 ARG GIT_REPO
+
+ENV GIT_VERSION=${GIT_VERSION}
 LABEL org.opencontainers.image.source=${GIT_REPO}
 
 ENTRYPOINT ["/sbin/tini", "--"]
