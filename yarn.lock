@@ -74,6 +74,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@lolpants/env@npm:^0.2.1":
+  version: 0.2.1
+  resolution: "@lolpants/env@npm:0.2.1"
+  dependencies:
+    dotenv-cra: ^3.0.2
+  checksum: 28dcba466b4d427d9e296a61bd49793823c49d5df0e1d9d5948e3549f2fcf6a4b87f3fac249fdf0a2dff2efdf44dea749ee5e5bee7ded1ad0cf0cc5945bc2d5a
+  languageName: node
+  linkType: hard
+
 "@nodelib/fs.scandir@npm:2.1.5":
   version: 2.1.5
   resolution: "@nodelib/fs.scandir@npm:2.1.5"
@@ -1055,6 +1064,30 @@ __metadata:
   dependencies:
     is-obj: ^2.0.0
   checksum: d5775790093c234ef4bfd5fbe40884ff7e6c87573e5339432870616331189f7f5d86575c5b5af2dcf0f61172990f4f734d07844b1f23482fff09e3c4bead05ea
+  languageName: node
+  linkType: hard
+
+"dotenv-cra@npm:^3.0.2":
+  version: 3.0.2
+  resolution: "dotenv-cra@npm:3.0.2"
+  dependencies:
+    dotenv: ^10.0.0
+    dotenv-expand: ^5.1.0
+  checksum: dc33ca4c8751a16390f646513bbdfdf64e0cc6ebf3439e1d3e9fb418005f13d53106792e545824d9c08084a9c4e1bec425d30628f9791dab1f9a97f1e3684a64
+  languageName: node
+  linkType: hard
+
+"dotenv-expand@npm:^5.1.0":
+  version: 5.1.0
+  resolution: "dotenv-expand@npm:5.1.0"
+  checksum: 8017675b7f254384915d55f9eb6388e577cf0a1231a28d54b0ca03b782be9501b0ac90ac57338636d395fa59051e6209e9b44b8ddf169ce6076dffb5dea227d3
+  languageName: node
+  linkType: hard
+
+"dotenv@npm:^10.0.0":
+  version: 10.0.0
+  resolution: "dotenv@npm:10.0.0"
+  checksum: f412c5fe8c24fbe313d302d2500e247ba8a1946492db405a4de4d30dd0eb186a88a43f13c958c5a7de303938949c4231c56994f97d05c4bc1f22478d631b4005
   languageName: node
   linkType: hard
 
@@ -4104,6 +4137,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "spamton@workspace:."
   dependencies:
+    "@lolpants/env": ^0.2.1
     "@types/node": ^17.0.35
     nodemon: ^2.0.16
     reflect-metadata: ^0.1.13
