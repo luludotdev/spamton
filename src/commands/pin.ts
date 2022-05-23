@@ -77,13 +77,16 @@ export abstract class Pin {
         field('message', message.id)
       )
     } catch (error: unknown) {
+      const action = isPinned ? 'unpin' : 'pin'
+      let message = `Failed to ${action} message!`
+
       if (error instanceof Error) {
         logger.error(context, errorField(error))
+        message += `\n${error.message}`
       }
 
-      const action = isPinned ? 'unpin' : 'pin'
       await interaction.reply({
-        content: `Failed to ${action} message!\nCheck permissions and pin limit.`,
+        content: message,
         ephemeral: true,
       })
     }
