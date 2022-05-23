@@ -7,6 +7,7 @@ const IS_PROD = NODE_ENV?.toLowerCase() === 'production'
 export const IS_DEV = !IS_PROD
 
 export const DEBUG_LOGS = registerBool('DEBUG_LOGS')
+export const GIT_VERSION = registerString('GIT_VERSION')
 // #endregion
 
 // #region Bot
