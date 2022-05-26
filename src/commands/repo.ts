@@ -1,5 +1,5 @@
 import { type CommandInteraction } from 'discord.js'
-import { Discord, Slash, SlashOption } from 'discordx'
+import { Discord, Slash } from 'discordx'
 
 @Discord()
 export abstract class Repo {
