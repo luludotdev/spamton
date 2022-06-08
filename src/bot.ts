@@ -1,6 +1,3 @@
-import 'source-map-support/register.js'
-import 'reflect-metadata'
-
 import { dirname, importx } from '@discordx/importer'
 import { exitHook } from '@lolpants/exit'
 import { field } from '@lolpants/jogger'
@@ -8,7 +5,7 @@ import { Intents } from 'discord.js'
 import { Client } from 'discordx'
 import { join as joinPath } from 'node:path/posix'
 import { GUILD_ID, IS_DEV, TOKEN } from '~/env.js'
-import { ctxField, errorField, flush, logger, userField } from '~/logger.js'
+import { ctxField, logger, userField } from '~/logger.js'
 import { getVersion } from '~/version.js'
 
 const client = new Client({
@@ -37,7 +34,7 @@ client.on('interactionCreate', interaction => {
   void client.executeInteraction(interaction)
 })
 
-const run = async () => {
+export const run = async () => {
   const version = await getVersion()
   logger.info(
     ctxField('boot'),
@@ -54,17 +51,7 @@ const run = async () => {
   await client.login(TOKEN)
 }
 
-exitHook(async (exit, error) => {
+exitHook(async exit => {
   client.destroy()
-
-  if (error) {
-    logger.error(errorField(error))
-  } else {
-    logger.info(field('action', 'shutdown'))
-  }
-
-  await flush()
   exit()
 })
-
-void run()
