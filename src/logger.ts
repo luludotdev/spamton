@@ -12,13 +12,13 @@ import {
   type TextBasedChannel,
   User,
 } from 'discord.js'
-import { DEBUG_LOGS, IS_DEV } from '~/env.js'
+import { env, IS_DEV } from '~/env.js'
 
 const consoleSink = createConsoleSink(IS_DEV)
 const fileSink = createFileSink({
   name: 'bot',
   directory: 'logs',
-  debug: DEBUG_LOGS ?? IS_DEV,
+  debug: env.DEBUG_LOGS ?? IS_DEV,
   rollEveryDay: true,
 })
 

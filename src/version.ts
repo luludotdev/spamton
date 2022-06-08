@@ -1,8 +1,8 @@
 import { execa } from 'execa'
-import { GIT_VERSION } from '~/env.js'
+import { env } from '~/env.js'
 
-export const getVersion = async () => {
-  if (GIT_VERSION) return GIT_VERSION
+export const getVersion: () => Promise<string> = async () => {
+  if (env.GIT_VERSION) return env.GIT_VERSION
 
   try {
     const { stdout: gitVersion } = await execa('git rev-parse --short HEAD')
