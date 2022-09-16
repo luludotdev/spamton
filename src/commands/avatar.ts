@@ -14,7 +14,7 @@ export abstract class Avatar {
   public async setAvatar(
     @SlashOption('avatar', { type: 'ATTACHMENT' })
     avatar: MessageAttachment,
-    ctx: CommandInteraction
+    ctx: CommandInteraction,
   ) {
     const { user } = ctx.client
     if (user === null) {
@@ -36,7 +36,7 @@ export abstract class Avatar {
       logger.info(
         context,
         userField('invoker', ctx.user),
-        field('url', avatar.url)
+        field('url', avatar.url),
       )
     } catch (error: unknown) {
       if (error instanceof Error) {

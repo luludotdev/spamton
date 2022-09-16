@@ -1,9 +1,9 @@
+import { join as joinPath } from 'node:path/posix'
 import { dirname, importx } from '@discordx/importer'
 import { exitHook } from '@lolpants/exit'
 import { field } from '@lolpants/jogger'
 import { Intents } from 'discord.js'
 import { Client } from 'discordx'
-import { join as joinPath } from 'node:path/posix'
 import { env, IS_DEV } from '~/env.js'
 import { ctxField, logger, userField } from '~/logger.js'
 import { getVersion } from '~/version.js'
@@ -26,7 +26,7 @@ client.once('ready', async () => {
   logger.info(
     field('action', 'ready'),
     userField('user', client.user!),
-    field('guild', field('id', env.GUILD_ID), field('name', guild.name))
+    field('guild', field('id', env.GUILD_ID), field('name', guild.name)),
   )
 })
 
@@ -39,12 +39,12 @@ export const run = async () => {
   logger.info(
     ctxField('boot'),
     field('version', version),
-    field('environment', IS_DEV ? 'dev' : 'prod')
+    field('environment', IS_DEV ? 'dev' : 'prod'),
   )
 
   const imports = joinPath(
     dirname(import.meta.url).replaceAll('\\', '/'),
-    '/{handlers,commands}/**/*.{ts,js}'
+    '/{handlers,commands}/**/*.{ts,js}',
   )
 
   await importx(imports)

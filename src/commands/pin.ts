@@ -50,7 +50,7 @@ export abstract class Pin {
     }
 
     const message = await interaction.channel?.messages.fetch(
-      interaction.targetMessage.id
+      interaction.targetMessage.id,
     )
 
     if (message === undefined) {
@@ -74,7 +74,7 @@ export abstract class Pin {
         field('action', action),
         userField('user', interaction.user),
         channelField('channel', channel),
-        field('message', message.id)
+        field('message', message.id),
       )
     } catch (error: unknown) {
       const action = isPinned ? 'unpin' : 'pin'

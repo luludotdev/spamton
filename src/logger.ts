@@ -29,9 +29,9 @@ export const logger = createLogger({
 
 export const ctxField = createField('context')
 export const errorField: <T extends Error>(
-  error: T
+  error: T,
 ) => Readonly<Field> = error => {
-  const array: Array<Readonly<Field>> = [
+  const array: Readonly<Field>[] = [
     field('type', error.name),
     field('message', error.message),
   ]
@@ -42,7 +42,7 @@ export const errorField: <T extends Error>(
 
 export const userField: (
   name: string,
-  user: User | GuildMember
+  user: GuildMember | User,
 ) => Readonly<Field> = (name, u) => {
   const user = u instanceof User ? u : u.user
   return field(name, field('id', user.id), field('tag', user.tag))
@@ -50,14 +50,14 @@ export const userField: (
 
 export const channelField: (
   name: string,
-  channel: TextBasedChannel
+  channel: TextBasedChannel,
 ) => Readonly<Field> = (name, channel) => {
   if (channel instanceof DMChannel || channel.partial) {
     return field(
       name,
       field('id', channel.id),
       field('type', channel.type),
-      userField('recipient', channel.recipient)
+      userField('recipient', channel.recipient),
     )
   }
 
@@ -65,7 +65,7 @@ export const channelField: (
     name,
     field('id', channel.id),
     field('type', channel.type),
-    field('name', `#${channel.name}`)
+    field('name', `#${channel.name}`),
   )
 }
 
