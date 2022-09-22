@@ -4,7 +4,7 @@
     // Type Checking
     "allowUnreachableCode": false,
     "allowUnusedLabels": false,
-    "exactOptionalPropertyTypes": true,
+    "exactOptionalPropertyTypes": false,
     "noFallthroughCasesInSwitch": true,
     "noImplicitOverride": true,
     "noImplicitReturns": true,
@@ -13,6 +13,7 @@
     "strict": true,
     "useUnknownInCatchVariables": true,
     "noUncheckedIndexedAccess": true,
+    "skipLibCheck": true,
 
     // Modules
     "module": "ESNext",
@@ -23,10 +24,10 @@
     "declaration": false,
     "declarationMap": false,
     "importHelpers": true,
+    "noEmitHelpers": true,
     "importsNotUsedAsValues": "error",
     "inlineSources": true,
     "newLine": "lf",
-    "noEmitHelpers": true,
     "outDir": "build",
     "preserveConstEnums": true,
     "removeComments": true,

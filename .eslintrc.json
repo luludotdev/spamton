@@ -5,8 +5,17 @@
     "project": "./tsconfig.eslint.json"
   },
   "rules": {
-    "typescript-sort-keys/interface": 0,
-    "@typescript-eslint/consistent-type-definitions": ["error", "interface"]
+    "typescript-sort-keys/interface": "off",
+    "@typescript-eslint/lines-between-class-members": "off",
+    "@typescript-eslint/consistent-type-definitions": ["error", "interface"],
+
+    "no-warning-comments": [
+      1,
+      {
+        "location": "start",
+        "terms": ["TODO", "@toto"]
+      }
+    ]
   },
   "ignorePatterns": ["**/build/*"],
   "env": {
