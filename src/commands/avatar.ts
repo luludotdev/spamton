@@ -1,6 +1,9 @@
-import { Description } from '@discordx/utilities'
 import { field } from '@lolpants/jogger'
-import { type CommandInteraction, type MessageAttachment } from 'discord.js'
+import {
+  CommandInteraction,
+  ApplicationCommandOptionType as OptionType,
+  Attachment,
+} from 'discord.js'
 import { Discord, Slash, SlashOption } from 'discordx'
 import { ctxField, errorField, logger, userField } from '~/logger.js'
 
@@ -8,12 +11,19 @@ const context = ctxField('avatar')
 
 @Discord()
 export abstract class Avatar {
-  @Slash('avatar')
-  @Description(`Set the bot's avatar`)
-  // TODO: Default permissions
+  @Slash({
+    name: 'avatar',
+    description: `Set the bot's avatar`,
+    defaultMemberPermissions: 'ManageGuild',
+  })
   public async setAvatar(
-    @SlashOption('avatar', { type: 'ATTACHMENT' })
-    avatar: MessageAttachment,
+    @SlashOption({
+      name: 'avatar',
+      type: OptionType.Attachment,
+      description: 'Avatar',
+      required: true,
+    })
+    avatar: Attachment,
     ctx: CommandInteraction,
   ) {
     const { user } = ctx.client

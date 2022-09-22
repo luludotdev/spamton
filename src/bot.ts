@@ -2,7 +2,7 @@ import { join as joinPath } from 'node:path/posix'
 import { dirname, importx } from '@discordx/importer'
 import { exitHook } from '@lolpants/exit'
 import { field } from '@lolpants/jogger'
-import { Intents } from 'discord.js'
+import { IntentsBitField as Intents } from 'discord.js'
 import { Client } from 'discordx'
 import { env, IS_DEV } from '~/env.js'
 import { ctxField, logger, userField } from '~/logger.js'
@@ -11,9 +11,9 @@ import { getVersion } from '~/version.js'
 const client = new Client({
   silent: true,
   intents: [
-    Intents.FLAGS.GUILDS,
-    Intents.FLAGS.GUILD_MESSAGES,
-    Intents.FLAGS.GUILD_MEMBERS,
+    Intents.Flags.Guilds,
+    Intents.Flags.GuildMessages,
+    Intents.Flags.GuildMembers,
   ],
   botGuilds: [env.GUILD_ID],
 })
@@ -22,7 +22,7 @@ client.once('ready', async () => {
   await client.guilds.fetch()
   await client.initApplicationCommands()
 
-  const guild = await client.guilds.fetch(env.GUILD_ID)!
+  const guild = await client.guilds.fetch(env.GUILD_ID)
   logger.info(
     field('action', 'ready'),
     userField('user', client.user!),

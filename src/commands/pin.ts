@@ -1,8 +1,9 @@
 import { field } from '@lolpants/jogger'
 import {
+  ApplicationCommandType,
   DMChannel,
   GuildMember,
-  type MessageContextMenuInteraction,
+  type MessageContextMenuCommandInteraction as MessageContextMenuInteraction,
 } from 'discord.js'
 import { ContextMenu, Discord } from 'discordx'
 import {
@@ -17,7 +18,7 @@ const context = ctxField('pin')
 
 @Discord()
 export abstract class Pin {
-  @ContextMenu('MESSAGE', 'Pin / Unpin')
+  @ContextMenu({ name: 'Pin / Unpin', type: ApplicationCommandType.Message })
   public async messageHandler(interaction: MessageContextMenuInteraction) {
     const channel = interaction.channel!
     if (channel instanceof DMChannel || channel.partial) {
@@ -40,7 +41,7 @@ export abstract class Pin {
     }
 
     const permissions = member.permissionsIn(channel)
-    if (!permissions.has('VIEW_CHANNEL') || !permissions.has('SEND_MESSAGES')) {
+    if (!permissions.has('ViewChannel') || !permissions.has('SendMessages')) {
       await interaction.reply({
         content: 'You do not have permission to manage pins in this channel!',
         ephemeral: true,

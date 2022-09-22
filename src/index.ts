@@ -6,7 +6,6 @@ import { field } from '@lolpants/jogger'
 import { errorField, flush, logger } from '~/logger.js'
 
 const boot = async () => {
-  // eslint-disable-next-line node/no-unsupported-features/es-syntax
   const { run } = await import('./bot.js')
   await run()
 }

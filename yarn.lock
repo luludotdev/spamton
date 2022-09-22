@@ -279,18 +279,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@discordx/utilities@npm:^5.1.0":
-  version: 5.1.0
-  resolution: "@discordx/utilities@npm:5.1.0"
-  dependencies:
-    tslib: ^2.4.0
-  peerDependencies:
-    discord.js: ">=14 || ^14.0.0-dev"
-    discordx: ">=10 || ^10.0.0-dev"
-  checksum: 896bd1c3b6027fc1c6ed17de4eb640ce4e461aa28feabc0962c9e8cb1aa15cdb065e69b8b83099d0207449a26ee34d0d6046eda198da41487efea90a9b5021f1
-  languageName: node
-  linkType: hard
-
 "@es-joy/jsdoccomment@npm:~0.31.0":
   version: 0.31.0
   resolution: "@es-joy/jsdoccomment@npm:0.31.0"
@@ -4268,7 +4256,6 @@ __metadata:
   resolution: "spamton@workspace:."
   dependencies:
     "@discordx/importer": ^1.1.10
-    "@discordx/utilities": ^5.1.0
     "@lolpants/env": ^0.6.1
     "@lolpants/exit": ^0.2.0
     "@lolpants/jogger": ^0.8.1
