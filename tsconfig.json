@@ -25,7 +25,6 @@
     "declarationMap": false,
     "importHelpers": true,
     "noEmitHelpers": true,
-    "importsNotUsedAsValues": "error",
     "inlineSources": true,
     "newLine": "lf",
     "outDir": "build",
