@@ -6,11 +6,14 @@ import {
   field,
   type Field,
 } from '@lolpants/jogger'
+import type { ForumChannel } from 'discord.js'
 import {
   ChannelType,
   type GuildMember,
+  type Role,
   type TextBasedChannel,
   User,
+  type VoiceBasedChannel,
 } from 'discord.js'
 import { env, IS_DEV } from '~/env.js'
 
@@ -51,23 +54,36 @@ export const userField: (name: string, user: GuildMember | User) => Field = (
 
 export const channelField: (
   name: string,
-  channel: TextBasedChannel,
+  channel: ForumChannel | TextBasedChannel | VoiceBasedChannel,
 ) => Field = (name, channel) => {
-  if (channel.type === ChannelType.DM) {
+  const channelType = ChannelType[channel.type] ?? 'unknown'
+  const fields: [Field, ...Field[]] = [
+    field('id', channel.id),
+    field('type', channelType),
+  ]
+
+  if (channel.isDMBased()) {
+    return field(name, ...fields, userField('recipient', channel.recipient!))
+  }
+
+  if (channel.isVoiceBased()) {
+    return field(name, ...fields, field('name', channel.name))
+  }
+
+  if (channel.isThread()) {
     return field(
       name,
-      field('id', channel.id),
-      field('type', channel.type),
-      userField('recipient', channel.recipient!),
+      ...fields,
+      field('name', `#${channel.name}`),
+      channelField('parent', channel.parent!),
     )
   }
 
-  return field(
-    name,
-    field('id', channel.id),
-    field('type', channel.type),
-    field('name', `#${channel.name}`),
-  )
+  return field(name, ...fields, field('name', `#${channel.name}`))
+}
+
+export const roleField: (name: string, role: Role) => Field = (name, role) => {
+  return field(name, field('id', role.id), field('name', role.name))
 }
 
 export const flush = async () => fileSink.flush()
