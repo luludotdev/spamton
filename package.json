@@ -2,18 +2,16 @@
   "name": "spamton",
   "packageManager": "yarn@3.5.0",
   "type": "module",
-  "main": "./build/index.js",
+  "main": "./dist/index.js",
   "private": true,
   "scripts": {
-    "lint": "prettier --check . && eslint src --ext mjs,js,ts",
-    "format": "prettier --write . && eslint src --ext mjs,js,ts --fix",
+    "lint": "prettier --check . && eslint src --ext ts",
+    "format": "prettier --write . && eslint src --ext ts --fix",
     "fmt": "yarn run format",
-    "clean": "rimraf build",
-    "compile": "ttsc",
-    "check": "yarn run compile --noEmit",
-    "build": "yarn run clean && yarn run compile",
+    "check": "yarn run tsc --noEmit --skipLibCheck",
     "test": "yarn run check && yarn run lint",
-    "dev": "yarn run clean && yarn run compile --watch",
+    "build": "tsup",
+    "dev": "yarn run build --watch",
     "debug": "nodemon --watch build --inspect"
   },
   "engines": {
@@ -26,12 +24,10 @@
     "nodemon": "^2.0.22",
     "prettier": "^2.8.7",
     "rimraf": "^4.4.1",
-    "ttypescript": "^1.5.15",
-    "typescript": "^4.9.5",
-    "typescript-transform-paths": "^3.4.6"
+    "tsup": "^6.7.0",
+    "typescript": "^5.0.3"
   },
   "dependencies": {
-    "@discordx/importer": "^1.2.1",
     "@lolpants/env": "^0.6.2",
     "@lolpants/exit": "^0.2.0",
     "@lolpants/jogger": "^0.8.1",

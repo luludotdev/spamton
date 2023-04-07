@@ -1,5 +1,3 @@
-import { join as joinPath } from 'node:path/posix'
-import { dirname, importx } from '@discordx/importer'
 import { exitHook } from '@lolpants/exit'
 import { field } from '@lolpants/jogger'
 import { IntentsBitField as Intents } from 'discord.js'
@@ -42,12 +40,7 @@ export const run = async () => {
     field('environment', IS_DEV ? 'dev' : 'prod'),
   )
 
-  const imports = joinPath(
-    dirname(import.meta.url).replaceAll('\\', '/'),
-    '/{handlers,commands}/**/*.{ts,js}',
-  )
-
-  await importx(imports)
+  await import('~/commands/index.js')
   await client.login(env.TOKEN)
 }
 
