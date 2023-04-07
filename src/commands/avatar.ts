@@ -1,8 +1,8 @@
 import { field } from '@lolpants/jogger'
 import {
+  Attachment,
   CommandInteraction,
   ApplicationCommandOptionType as OptionType,
-  Attachment,
 } from 'discord.js'
 import { Discord, Slash, SlashOption } from 'discordx'
 import { ctxField, errorField, logger, userField } from '~/logger.js'

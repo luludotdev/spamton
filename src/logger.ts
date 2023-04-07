@@ -4,16 +4,15 @@ import {
   createFileSink,
   createLogger,
   field,
-  type Field,
 } from '@lolpants/jogger'
-import type { ForumChannel } from 'discord.js'
-import {
-  ChannelType,
-  type GuildMember,
-  type Role,
-  type TextBasedChannel,
-  User,
-  type VoiceBasedChannel,
+import type { Field } from '@lolpants/jogger'
+import { ChannelType, User } from 'discord.js'
+import type {
+  ForumChannel,
+  GuildMember,
+  Role,
+  TextBasedChannel,
+  VoiceBasedChannel,
 } from 'discord.js'
 import { env, IS_DEV } from '~/env.js'
 
