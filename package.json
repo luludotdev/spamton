@@ -20,26 +20,26 @@
     "node": ">=16.9.0"
   },
   "devDependencies": {
-    "@types/node": "^16",
-    "eslint": "^8.23.1",
-    "eslint-config-neon": "^0.1.33",
-    "nodemon": "^2.0.20",
-    "prettier": "^2.7.1",
-    "rimraf": "^3.0.2",
-    "ttypescript": "^1.5.13",
-    "typescript": "^4.8.3",
-    "typescript-transform-paths": "^3.3.1"
+    "@lolpants/eslint-config": "^0.4.0",
+    "@types/node": "^18.15.11",
+    "eslint": "^8.37.0",
+    "nodemon": "^2.0.22",
+    "prettier": "^2.8.7",
+    "rimraf": "^4.4.1",
+    "ttypescript": "^1.5.15",
+    "typescript": "^4.9.5",
+    "typescript-transform-paths": "^3.4.6"
   },
   "dependencies": {
-    "@discordx/importer": "^1.1.10",
-    "@lolpants/env": "^0.6.1",
+    "@discordx/importer": "^1.2.1",
+    "@lolpants/env": "^0.6.2",
     "@lolpants/exit": "^0.2.0",
     "@lolpants/jogger": "^0.8.1",
-    "discord.js": "^14.4.0",
-    "discordx": "^11.3.0",
-    "execa": "^6.1.0",
+    "discord.js": "^14.9.0",
+    "discordx": "^11.7.4",
+    "execa": "^7.1.1",
     "reflect-metadata": "^0.1.13",
     "source-map-support": "^0.5.21",
-    "tslib": "^2.4.0"
+    "tslib": "^2.5.0"
   }
 }
