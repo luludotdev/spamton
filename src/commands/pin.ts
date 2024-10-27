@@ -1,6 +1,7 @@
 import type { MessageContextMenuCommandInteraction as MessageContextMenuInteraction } from 'discord.js'
 import { ApplicationCommandType, GuildMember } from 'discord.js'
-import { ContextMenu, Discord } from 'discordx'
+import { ContextMenu, Discord, Guild } from 'discordx'
+import { env } from '~/env'
 import {
   channelField,
   commandContext as ctxField,
@@ -13,6 +14,7 @@ const context = ctxField('pin')
 
 @Discord()
 export abstract class Pin {
+  @Guild(env.GUILD_ID)
   @ContextMenu({ name: 'Pin / Unpin', type: ApplicationCommandType.Message })
   public async messageHandler(interaction: MessageContextMenuInteraction) {
     const channel = interaction.channel!

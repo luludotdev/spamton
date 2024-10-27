@@ -1,6 +1,7 @@
 import type { Attachment, CommandInteraction } from 'discord.js'
 import { ApplicationCommandOptionType as OptionType } from 'discord.js'
-import { Discord, Slash, SlashOption } from 'discordx'
+import { Discord, Guild, Slash, SlashOption } from 'discordx'
+import { env } from '~/env'
 import {
   commandContext as ctxField,
   errorField,
@@ -12,6 +13,7 @@ const context = ctxField('avatar')
 
 @Discord()
 export abstract class Avatar {
+  @Guild(env.GUILD_ID)
   @Slash({
     name: 'avatar',
     description: `Set the bot's avatar`,
