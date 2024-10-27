@@ -1,11 +1,12 @@
-import { field } from '@lolpants/jogger'
-import {
-  Attachment,
-  CommandInteraction,
-  ApplicationCommandOptionType as OptionType,
-} from 'discord.js'
+import type { Attachment, CommandInteraction } from 'discord.js'
+import { ApplicationCommandOptionType as OptionType } from 'discord.js'
 import { Discord, Slash, SlashOption } from 'discordx'
-import { ctxField, errorField, logger, userField } from '~/logger.js'
+import {
+  commandContext as ctxField,
+  errorField,
+  logger,
+  userField,
+} from '~/logger.js'
 
 const context = ctxField('avatar')
 
@@ -43,14 +44,14 @@ export abstract class Avatar {
         ephemeral: true,
       })
 
-      logger.info(
-        context,
-        userField('invoker', ctx.user),
-        field('url', avatar.url),
-      )
+      logger.info({
+        ...context,
+        invoker: userField(ctx.user),
+        url: avatar.url,
+      })
     } catch (error: unknown) {
       if (error instanceof Error) {
-        logger.error(context, errorField(error))
+        logger.error({ ...context, ...errorField(error) })
       }
 
       await ctx.reply({

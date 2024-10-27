@@ -1,14 +1,9 @@
-import { field } from '@lolpants/jogger'
-import {
-  ApplicationCommandType,
-  DMChannel,
-  GuildMember,
-  MessageContextMenuCommandInteraction as MessageContextMenuInteraction,
-} from 'discord.js'
+import type { MessageContextMenuCommandInteraction as MessageContextMenuInteraction } from 'discord.js'
+import { ApplicationCommandType, GuildMember } from 'discord.js'
 import { ContextMenu, Discord } from 'discordx'
 import {
   channelField,
-  ctxField,
+  commandContext as ctxField,
   errorField,
   logger,
   userField,
@@ -21,7 +16,7 @@ export abstract class Pin {
   @ContextMenu({ name: 'Pin / Unpin', type: ApplicationCommandType.Message })
   public async messageHandler(interaction: MessageContextMenuInteraction) {
     const channel = interaction.channel!
-    if (channel instanceof DMChannel || channel.partial) {
+    if (channel.isDMBased()) {
       await interaction.reply({
         content: 'This cannot be run in DMs!',
         ephemeral: true,
@@ -70,19 +65,19 @@ export abstract class Pin {
       await (isPinned ? message.unpin() : message.pin())
       await interaction.reply({ content: `Message ${action}.` })
 
-      logger.info(
-        context,
-        field('action', action),
-        userField('user', interaction.user),
-        channelField('channel', channel),
-        field('message', message.id),
-      )
+      logger.info({
+        ...context,
+        action,
+        user: userField(interaction.user),
+        channel: channelField(channel),
+        message: message.id,
+      })
     } catch (error: unknown) {
       const action = isPinned ? 'unpin' : 'pin'
       let message = `Failed to ${action} message!`
 
       if (error instanceof Error) {
-        logger.error(context, errorField(error))
+        logger.error({ ...context, ...errorField(error) })
         message += `\n${error.message}`
       }
 

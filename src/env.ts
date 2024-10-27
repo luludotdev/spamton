@@ -1,5 +1,5 @@
-import '@lolpants/env/register.js'
-import { defineEnvironment, t } from '@lolpants/env'
+import '@luludev/env/register.js'
+import { defineEnvironment, t } from '@luludev/env'
 
 export const env = defineEnvironment({
   // #region Globals

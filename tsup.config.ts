@@ -7,17 +7,16 @@ export function createTsupConfig({
   noExternal = [],
   platform = 'node',
   format = 'esm',
-  target = 'es2022',
+  target = 'es2023',
   skipNodeModulesBundle = true,
   clean = true,
   shims = true,
-  minify = false,
   splitting = false,
   keepNames = true,
   dts = true,
   sourcemap = true,
-}: Options = {}) {
-  return defineConfig({
+}: Omit<Options, 'minify'> = {}) {
+  return defineConfig(options => ({
     entry,
     external,
     noExternal,
@@ -27,17 +26,16 @@ export function createTsupConfig({
     target,
     clean,
     shims,
-    minify,
+    minify: !options.watch,
     splitting,
     keepNames,
     dts,
     sourcemap,
-  })
+  }))
 }
 
 export default createTsupConfig({
   shims: false,
   dts: false,
-  minify: true,
   splitting: true,
 })

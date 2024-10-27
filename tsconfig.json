@@ -4,7 +4,7 @@
     // Type Checking
     "allowUnreachableCode": false,
     "allowUnusedLabels": false,
-    "exactOptionalPropertyTypes": false,
+    "exactOptionalPropertyTypes": true,
     "noFallthroughCasesInSwitch": true,
     "noImplicitOverride": true,
     "noImplicitReturns": true,
@@ -13,23 +13,24 @@
     "strict": true,
     "useUnknownInCatchVariables": true,
     "noUncheckedIndexedAccess": true,
-    "skipLibCheck": true,
 
     // Modules
     "module": "ESNext",
-    "moduleResolution": "node",
+    "moduleResolution": "Bundler",
     "resolveJsonModule": true,
+    "allowImportingTsExtensions": true,
 
     // Emit
-    "declaration": false,
-    "declarationMap": false,
-    "importHelpers": true,
-    "noEmitHelpers": true,
+    "noEmit": true,
+    "declaration": true,
+    "declarationMap": true,
+    "importHelpers": false,
+    "noEmitHelpers": false,
     "inlineSources": true,
     "newLine": "lf",
-    "outDir": "build",
+    "outDir": "dist",
     "preserveConstEnums": true,
-    "removeComments": true,
+    "removeComments": false,
     "sourceMap": true,
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
@@ -38,11 +39,10 @@
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
     "lib": ["ESNext"],
-    "target": "ES2021",
+    "target": "ES2023",
     "useDefineForClassFields": true,
 
     // Path Resolution
-    "plugins": [{ "transform": "typescript-transform-paths" }],
     "paths": {
       "~/*": ["./src/*"]
     }

@@ -1,9 +1,8 @@
-import { exitHook } from '@lolpants/exit'
-import { field } from '@lolpants/jogger'
+import { exitHook } from '@luludev/exit'
 import { IntentsBitField as Intents } from 'discord.js'
 import { Client } from 'discordx'
 import { env, IS_DEV } from '~/env.js'
-import { ctxField, logger, userField } from '~/logger.js'
+import { action, rootContext as ctxField, logger, userField } from '~/logger.js'
 import { getVersion } from '~/version.js'
 
 const client = new Client({
@@ -21,11 +20,14 @@ client.once('ready', async () => {
   await client.initApplicationCommands()
 
   const guild = await client.guilds.fetch(env.GUILD_ID)
-  logger.info(
-    field('action', 'ready'),
-    userField('user', client.user!),
-    field('guild', field('id', env.GUILD_ID), field('name', guild.name)),
-  )
+  logger.info({
+    ...action('ready'),
+    user: userField(client.user!),
+    guild: {
+      id: env.GUILD_ID,
+      name: guild.name,
+    },
+  })
 })
 
 client.on('interactionCreate', interaction => {
@@ -34,17 +36,21 @@ client.on('interactionCreate', interaction => {
 
 export const run = async () => {
   const version = await getVersion()
-  logger.info(
-    ctxField('boot'),
-    field('version', version),
-    field('environment', IS_DEV ? 'dev' : 'prod'),
-  )
+  logger.info({
+    ...ctxField('boot'),
+    version,
+    environment: IS_DEV ? 'dev' : 'prod',
+  })
 
-  await import('~/commands/index.js')
+  await Promise.all([
+    import('~/commands/index.js'),
+    // import('~/handlers/index.js'),
+  ])
+
   await client.login(env.TOKEN)
 }
 
 exitHook(async exit => {
-  client.destroy()
+  await client.destroy()
   exit()
 })
