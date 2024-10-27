@@ -1,17 +1,16 @@
 {
   "name": "spamton",
-  "packageManager": "yarn@3.5.0",
   "type": "module",
   "main": "./dist/index.js",
   "private": true,
   "scripts": {
     "lint": "prettier --check . && eslint src --ext ts",
     "format": "prettier --write . && eslint src --ext ts --fix",
-    "fmt": "yarn run format",
-    "check": "yarn run tsc --noEmit --skipLibCheck",
-    "test": "yarn run check && yarn run lint",
+    "fmt": "npm run format",
+    "check": "tsc -- --noEmit --skipLibCheck",
+    "test": "npm run check && npm run lint",
     "build": "tsup",
-    "dev": "yarn run build --watch",
+    "dev": "npm run build -- --watch",
     "debug": "nodemon --watch build --inspect"
   },
   "engines": {
