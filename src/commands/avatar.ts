@@ -16,7 +16,7 @@ export abstract class Avatar {
   @Guild(env.GUILD_ID)
   @Slash({
     name: "avatar",
-    description: `Set the bot's avatar`,
+    description: "Set the bot's avatar",
     defaultMemberPermissions: "ManageGuild",
   })
   public async setAvatar(
