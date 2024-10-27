@@ -17,6 +17,7 @@ const client = new Client({
     Intents.Flags.GuildMessages,
     Intents.Flags.GuildMembers,
   ],
+  botGuilds: IS_DEV ? [env.GUILD_ID] : [],
 });
 
 client.once("ready", async () => {
