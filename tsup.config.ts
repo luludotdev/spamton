@@ -1,13 +1,13 @@
-import { defineConfig } from 'tsup'
-import type { Options } from 'tsup'
+import { defineConfig } from "tsup";
+import type { Options } from "tsup";
 
 export function createTsupConfig({
-  entry = ['./src/index.ts'],
+  entry = ["./src/index.ts"],
   external = [],
   noExternal = [],
-  platform = 'node',
-  format = 'esm',
-  target = 'es2023',
+  platform = "node",
+  format = "esm",
+  target = "es2023",
   skipNodeModulesBundle = true,
   clean = true,
   shims = true,
@@ -15,8 +15,8 @@ export function createTsupConfig({
   keepNames = true,
   dts = true,
   sourcemap = true,
-}: Omit<Options, 'minify'> = {}) {
-  return defineConfig(options => ({
+}: Omit<Options, "minify"> = {}) {
+  return defineConfig((options) => ({
     entry,
     external,
     noExternal,
@@ -31,11 +31,11 @@ export function createTsupConfig({
     keepNames,
     dts,
     sourcemap,
-  }))
+  }));
 }
 
 export default createTsupConfig({
   shims: false,
   dts: false,
   splitting: true,
-})
+});

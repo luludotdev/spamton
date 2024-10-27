@@ -1,5 +1,5 @@
-import '@luludev/env/register.js'
-import { defineEnvironment, t } from '@luludev/env'
+import "@luludev/env/register.js";
+import { defineEnvironment, t } from "@luludev/env";
 
 export const env = defineEnvironment({
   // #region Globals
@@ -13,7 +13,7 @@ export const env = defineEnvironment({
   TOKEN: t.string().required(),
   GUILD_ID: t.string().required(),
   // #endregion
-})
+});
 
-const IS_PROD = env.NODE_ENV?.toLowerCase() === 'production'
-export const IS_DEV = !IS_PROD
+const IS_PROD = env.NODE_ENV?.toLowerCase() === "production";
+export const IS_DEV = !IS_PROD;
