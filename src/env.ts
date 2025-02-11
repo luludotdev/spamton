@@ -6,7 +6,8 @@ export const env = defineEnvironment({
   NODE_ENV: t.string(),
 
   DEBUG_LOGS: t.bool(),
-  GIT_VERSION: t.string(),
+  GIT_SHA: t.string(),
+  GITHUB_REPO: t.string(),
   // #endregion
 
   // #region Bot

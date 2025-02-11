@@ -2,7 +2,7 @@ import { execa } from "execa";
 import { env } from "~/env.js";
 
 export const getVersion: () => Promise<string> = async () => {
-  if (env.GIT_VERSION) return env.GIT_VERSION;
+  if (env.GIT_SHA) return env.GIT_SHA.slice(0, 7);
 
   try {
     const { stdout: gitVersion } = await execa("git", [
@@ -10,6 +10,7 @@ export const getVersion: () => Promise<string> = async () => {
       "--short",
       "HEAD",
     ]);
+
     const { stdout: status } = await execa("git", ["status", "-s"]);
     const dev = status !== "";
 
