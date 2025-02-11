@@ -15,23 +15,22 @@
   },
   "devDependencies": {
     "@luludev/eslint-config": "^0.5.4",
-    "@swc/core": "^1.7.40",
-    "@types/node": "^22.8.1",
-    "eslint": "^8",
-    "nodemon": "^3.1.7",
-    "prettier": "^3.3.3",
+    "@swc/core": "^1.10.15",
+    "@types/node": "^22.13.1",
+    "eslint": "^8.57.1",
+    "nodemon": "^3.1.9",
+    "prettier": "^3.5.0",
     "rimraf": "^6.0.1",
-    "tsup": "^8.3.5",
-    "typescript": "^5.6.3"
+    "tsup": "^8.3.6",
+    "typescript": "^5.7.3"
   },
   "dependencies": {
     "@luludev/env": "^0.6.6",
     "@luludev/exit": "^0.2.2",
     "@luludev/jogger": "^0.9.6",
-    "discord.js": "^14.16.3",
-    "discordx": "^11.12.1",
-    "execa": "^9.5.0",
-    "reflect-metadata": "^0.2.2",
-    "source-map-support": "^0.5.21"
+    "discord.js": "^14.18.0",
+    "discordx": "^11.12.2",
+    "execa": "^9.5.2",
+    "reflect-metadata": "^0.2.2"
   }
 }
