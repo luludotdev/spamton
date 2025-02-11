@@ -5,19 +5,21 @@ ENV PNPM_HOME="/pnpm"
 ENV PATH="$PNPM_HOME:$PATH"
 RUN npm i -g corepack && corepack enable && corepack prepare pnpm@latest-10 --activate
 
+# ---
 FROM pnpm AS deps-base
-
 WORKDIR /app
 COPY ./pnpm-lock.yaml ./
-RUN pnpm fetch
-COPY ./package.json ./
 
 # ---
 FROM deps-base AS deps-dev
+RUN pnpm fetch
+COPY ./package.json ./
 RUN pnpm install --offline --frozen-lockfile
 
 # ---
 FROM deps-base AS deps-prod
+RUN pnpm fetch --prod
+COPY ./package.json ./
 RUN pnpm install --offline --frozen-lockfile --prod
 
 # ---
