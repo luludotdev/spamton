@@ -1,35 +1,32 @@
 # syntax=docker/dockerfile:1
 FROM node:22-alpine AS base
-FROM base AS deps-base
+FROM base AS pnpm
+ENV PNPM_HOME="/pnpm"
+ENV PATH="$PNPM_HOME:$PATH"
+RUN npm i -g corepack && corepack enable && corepack prepare pnpm@latest-10 --activate
+
+FROM pnpm AS deps-base
 
 WORKDIR /app
-COPY ./package.json ./package-lock.json ./
-
-RUN apk add --no-cache --virtual \
-  build-deps \
-  python3 \
-  alpine-sdk \
-  autoconf \
-  libtool \
-  automake
+COPY ./pnpm-lock.yaml ./
+RUN pnpm fetch
+COPY ./package.json ./
 
 # ---
 FROM deps-base AS deps-dev
-RUN npm i -g npm
-RUN npm ci
+RUN pnpm install --offline --frozen-lockfile
 
 # ---
 FROM deps-base AS deps-prod
-RUN npm i -g npm
-RUN npm ci --omit=dev
+RUN pnpm install --offline --frozen-lockfile --prod
 
 # ---
-FROM base AS builder
+FROM pnpm AS builder
 WORKDIR /app
 
 COPY . .
 COPY --from=deps-dev /app/node_modules ./node_modules
-RUN npm run build
+RUN pnpm run build
 
 # ---
 FROM base AS runner
