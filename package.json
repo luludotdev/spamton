@@ -6,11 +6,11 @@
   "scripts": {
     "lint": "prettier --check . && eslint src",
     "format": "prettier --write . && eslint src --fix",
-    "fmt": "npm run format",
+    "fmt": "pnpm run format",
     "check": "tsc --noEmit --skipLibCheck",
-    "test": "npm run check && npm run lint",
+    "test": "pnpm run check && pnpm run lint",
     "build": "tsup",
-    "dev": "npm run build -- --watch",
+    "dev": "pnpm run build --watch",
     "debug": "nodemon --watch build --inspect"
   },
   "devDependencies": {
