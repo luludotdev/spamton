@@ -34,8 +34,6 @@ FROM base AS runner
 WORKDIR /app
 ENV NODE_ENV=production
 
-RUN apk add --no-cache tini
-
 COPY --from=deps-prod /app/node_modules ./node_modules
 COPY --from=builder /app/dist ./dist
 COPY --from=builder /app/package.json ./package.json
@@ -49,11 +47,10 @@ RUN mkdir /app/logs && \
 USER nodejs
 VOLUME ["/app/logs"]
 
-ARG GIT_VERSION
-ARG GIT_REPO
+ARG GIT_SHA
+ARG GITHUB_REPO
 
-ENV GIT_VERSION=${GIT_VERSION}
-LABEL org.opencontainers.image.source=${GIT_REPO}
+ENV GIT_SHA=${GIT_SHA}
+ENV GITHUB_REPO=${GITHUB_REPO}
 
-ENTRYPOINT ["/sbin/tini", "--"]
-CMD ["node", "."]
+CMD ["node", "--enable-source-maps", "."]
