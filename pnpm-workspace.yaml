@@ -1,3 +1,5 @@
 onlyBuiltDependencies:
   - '@swc/core'
+  - cpu-features
   - esbuild
+  - ssh2

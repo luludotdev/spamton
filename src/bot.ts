@@ -49,7 +49,7 @@ export const run = async () => {
 
   await Promise.all([
     import("~/commands/index.js"),
-    // import('~/handlers/index.js'),
+    import("~/handlers/index.js"),
   ]);
 
   await client.login(env.TOKEN);

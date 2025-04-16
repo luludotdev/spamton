@@ -14,6 +14,8 @@ export const env = defineEnvironment({
   TOKEN: t.string().required(),
   GUILD_ID: t.string().required(),
   // #endregion
+
+  TEAMSPEAK_URI: t.string(),
 });
 
 const IS_PROD = env.NODE_ENV?.toLowerCase() === "production";
