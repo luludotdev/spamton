@@ -15,14 +15,14 @@
   },
   "devDependencies": {
     "@luludev/eslint-config": "^0.6.4",
-    "@swc/core": "^1.10.15",
-    "@types/node": "^22.13.1",
-    "eslint": "^9.20.0",
+    "@swc/core": "^1.11.21",
+    "@types/node": "^22.14.1",
+    "eslint": "^9.24.0",
     "nodemon": "^3.1.9",
-    "prettier": "^3.5.0",
+    "prettier": "^3.5.3",
     "rimraf": "^6.0.1",
-    "tsup": "^8.3.6",
-    "typescript": "^5.7.3"
+    "tsup": "^8.4.0",
+    "typescript": "^5.8.3"
   },
   "dependencies": {
     "@luludev/env": "^0.6.6",
