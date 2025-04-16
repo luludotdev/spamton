@@ -3,6 +3,7 @@
 
 # pnpm
 pnpm-lock.yaml
+pnpm-workspace.yaml
 
 # Generated
 dist/
