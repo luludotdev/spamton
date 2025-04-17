@@ -33,5 +33,20 @@
     "execa": "^9.5.2",
     "reflect-metadata": "^0.2.2",
     "ts3-nodejs-library": "^3.5.1"
+  },
+  "pnpm": {
+    "overrides": {
+      "@angular-eslint/eslint-plugin": "-",
+      "@angular-eslint/eslint-plugin-template": "-",
+      "@angular-eslint/template-parser": "-",
+      "astro-eslint-parser": "-",
+      "eslint-plugin-astro": "-",
+      "eslint-plugin-cypress": "-",
+      "eslint-plugin-rxjs": "-",
+      "eslint-plugin-rxjs-angular": "-",
+      "eslint-plugin-svelte3": "-",
+      "eslint-plugin-vue": "-",
+      "vue-eslint-parser": "-"
+    }
   }
 }
