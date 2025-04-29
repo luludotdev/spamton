@@ -39,7 +39,7 @@
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
     "lib": ["ESNext"],
-    "target": "ES2023",
+    "target": "ES2024",
     "useDefineForClassFields": true,
 
     // Path Resolution
