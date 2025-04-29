@@ -3,7 +3,9 @@ import { time } from "discord.js";
 import { Discord, Guild, Slash } from "discordx";
 import { ClientType } from "ts3-nodejs-library";
 import { env } from "~/env";
-import { connect } from "~/ts3";
+import { connect, parseUsers } from "~/ts3";
+
+const ID_MAP = parseUsers();
 
 @Discord()
 export abstract class TS {
@@ -24,16 +26,19 @@ export abstract class TS {
     });
 
     const content = clients
-      .map(({ nickname, away, lastconnected }): string => {
+      .map(({ uniqueIdentifier, nickname, away, lastconnected }): string => {
+        const discordId = ID_MAP.get(uniqueIdentifier);
+        const user = discordId ? `<@${discordId}>` : nickname;
+
         const joined = time(new Date(lastconnected * 1_000), "R");
         let line = "* ";
         if (away) line += "(AFK) ";
-        line += `**${nickname}** [joined ${joined}]`;
+        line += `**${user}** [joined ${joined}]`;
 
         return line;
       })
       .join("\n");
 
-    await ctx.editReply({ content });
+    await ctx.editReply({ content, allowedMentions: { parse: [] } });
   }
 }

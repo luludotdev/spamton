@@ -87,3 +87,18 @@ export interface TeamSpeak extends TeamSpeakBase {
   [Symbol.asyncDispose]: () => Promise<void>;
 }
 // #endregion
+
+// #region User Map
+export const parseUsers = (): Map<string, string> => {
+  if (!env.TEAMSPEAK_USERS) return new Map();
+
+  const pairs = env.TEAMSPEAK_USERS.split(" ").map(
+    (pair) => pair.split(":") as string[],
+  );
+
+  const valid = pairs.map((pair) => pair.length === 2).every(Boolean);
+  if (!valid) throw new Error("invalid teamspeak users");
+
+  return new Map(pairs as [string, string][]);
+};
+// #endregion

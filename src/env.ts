@@ -16,6 +16,7 @@ export const env = defineEnvironment({
   // #endregion
 
   TEAMSPEAK_URI: t.string(),
+  TEAMSPEAK_USERS: t.string(),
 });
 
 const IS_PROD = env.NODE_ENV?.toLowerCase() === "production";
