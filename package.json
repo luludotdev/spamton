@@ -10,8 +10,8 @@
     "check": "tsc --noEmit --skipLibCheck",
     "test": "pnpm run check && pnpm run lint",
     "build": "tsdown",
-    "dev": "pnpm run build --watch",
-    "debug": "nodemon --watch build --inspect"
+    "dev": "pnpm run build --watch ./src",
+    "debug": "nodemon --watch dist --inspect"
   },
   "devDependencies": {
     "@luludev/eslint-config": "^0.6.4",
