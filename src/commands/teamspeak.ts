@@ -17,6 +17,13 @@ export abstract class TS {
     await using ts = await connect();
     const clients = await ts.clientList({ clientType: ClientType.Regular });
 
+    if (clients.length === 0) {
+      const content = "nobody is online :(";
+
+      await ctx.editReply({ content, allowedMentions: { parse: [] } });
+      return;
+    }
+
     clients.sort((a, b) => {
       if (a.talkPower === b.talkPower) {
         return a.nickname.localeCompare(b.nickname);
