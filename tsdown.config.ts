@@ -1,9 +1,10 @@
 import { defineConfig } from "tsdown/config";
 
-const config = defineConfig(() => ({
+const config = defineConfig((options) => ({
   entry: "./src/index.ts",
-  target: "es2024",
+  target: "node22",
   sourcemap: true,
+  minify: !options.watch,
 }));
 
 export default config;
