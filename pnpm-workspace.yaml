@@ -3,3 +3,4 @@ onlyBuiltDependencies:
   - cpu-features
   - esbuild
   - ssh2
+  - unrs-resolver
