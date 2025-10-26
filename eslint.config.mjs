@@ -15,7 +15,12 @@ const config = [
   ...typescript,
   ...prettier,
   {
-    languageOptions: { parserOptions: { project: "./tsconfig.json" } },
+    languageOptions: {
+      parserOptions: {
+        projectService: true,
+        tsconfigRootDir: import.meta.dirname,
+      },
+    },
   },
 ];
 
