@@ -8,8 +8,8 @@ import { connect } from "~/ts3";
 
 @Discord()
 export abstract class TeamSpeak {
-  @On({ event: "ready" })
-  public onReady([client]: ArgsOf<"ready">): void {
+  @On({ event: "clientReady" })
+  public onReady([client]: ArgsOf<"clientReady">): void {
     setInterval(() => {
       void this.#setStatus(client);
     }, 1_000 * 60);
