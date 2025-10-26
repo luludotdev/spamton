@@ -20,7 +20,7 @@ const client = new Client({
   botGuilds: IS_DEV ? [env.GUILD_ID] : [],
 });
 
-client.once("ready", async () => {
+client.once("clientReady", async () => {
   await client.guilds.fetch();
   await client.initApplicationCommands();
 
