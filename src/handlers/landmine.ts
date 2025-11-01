@@ -31,6 +31,7 @@ export abstract class Landmine {
 
   @On({ event: "messageCreate" })
   public async onMessage([message]: ArgsOf<"messageCreate">) {
+    if (message.author === message.client.user) return;
     if (!message.member) return;
     if (!message.member.moderatable) return;
 
