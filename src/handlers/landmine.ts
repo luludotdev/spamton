@@ -33,17 +33,23 @@ export abstract class Landmine {
   public async onMessage([message]: ArgsOf<"messageCreate">) {
     if (message.author === message.client.user) return;
     if (!message.member) return;
-    if (!message.member.moderatable) return;
 
     const rng = this.#rng();
     if (rng > this.#PERCENTAGE / 100) return;
 
     try {
-      await message.member.timeout(this.#TIMEOUT * 60 * 1_000, "landmine");
-      await message.reply({
-        allowedMentions: { parse: [] },
-        content: `💥 ${message.author} stepped on a landmine and has been timed out for ${this.#TIMEOUT} minute${this.#TIMEOUT > 1 ? "s" : ""}`,
-      });
+      if (!message.member.moderatable) {
+        await message.reply({
+          allowedMentions: { parse: [] },
+          content: `‼️ ${message.author} stepped on a landmine, but it was inactive`,
+        });
+      } else {
+        await message.member.timeout(this.#TIMEOUT * 60 * 1_000, "landmine");
+        await message.reply({
+          allowedMentions: { parse: [] },
+          content: `💥 ${message.author} stepped on a landmine and has been timed out for ${this.#TIMEOUT} minute${this.#TIMEOUT > 1 ? "s" : ""}`,
+        });
+      }
 
       logger.info({
         ...context,
