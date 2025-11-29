@@ -15,21 +15,21 @@
   },
   "devDependencies": {
     "@luludev/eslint-config": "^0.8.0",
-    "@types/node": "^24.9.2",
-    "eslint": "^9.39.0",
-    "nodemon": "^3.1.10",
-    "prettier": "^3.6.2",
-    "rimraf": "^6.1.0",
-    "tsdown": "^0.15.12",
+    "@types/node": "^24.10.1",
+    "eslint": "^9.39.1",
+    "nodemon": "^3.1.11",
+    "prettier": "^3.7.3",
+    "rimraf": "^6.1.2",
+    "tsdown": "0.17.0-beta.3",
     "typescript": "^5.9.3"
   },
   "dependencies": {
     "@luludev/env": "^0.6.6",
     "@luludev/exit": "^0.2.2",
     "@luludev/jogger": "^0.9.6",
-    "discord.js": "^14.24.2",
+    "discord.js": "^14.25.1",
     "discordx": "^11.13.2",
-    "execa": "^9.6.0",
+    "execa": "^9.6.1",
     "reflect-metadata": "^0.2.2",
     "ts3-nodejs-library": "^3.5.1"
   },
@@ -52,6 +52,7 @@
     },
     "onlyBuiltDependencies": [
       "cpu-features",
+      "esbuild",
       "ssh2",
       "unrs-resolver"
     ]
