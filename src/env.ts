@@ -17,6 +17,8 @@ export const env = defineEnvironment({
 
   TEAMSPEAK_URI: t.string(),
   TEAMSPEAK_USERS: t.string(),
+
+  LANDMINE_EXEMPT_CHANNELS: t.string(),
 });
 
 const IS_PROD = env.NODE_ENV?.toLowerCase() === "production";

@@ -1,5 +1,6 @@
 import type { ArgsOf } from "discordx";
 import { Discord, On } from "discordx";
+import { env } from "~/env";
 import {
   commandContext as ctxField,
   errorField,
@@ -8,6 +9,7 @@ import {
 } from "~/logger.js";
 
 const context = ctxField("landmine");
+const LANDMINE_EXEMPT_CHANNELS = env.LANDMINE_EXEMPT_CHANNELS?.split(",") ?? [];
 
 @Discord()
 export abstract class Landmine {
@@ -33,6 +35,7 @@ export abstract class Landmine {
   public async onMessage([message]: ArgsOf<"messageCreate">) {
     if (message.author === message.client.user) return;
     if (!message.member) return;
+    if (LANDMINE_EXEMPT_CHANNELS.includes(message.channelId)) return;
 
     const rng = this.#rng();
     if (rng > this.#PERCENTAGE / 100) return;
