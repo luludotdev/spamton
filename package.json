@@ -1,7 +1,7 @@
 {
   "name": "spamton",
   "type": "module",
-  "main": "./dist/index.js",
+  "main": "./dist/index.mjs",
   "private": true,
   "scripts": {
     "lint": "prettier --check . && eslint src",
