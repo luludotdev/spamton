@@ -13,13 +13,13 @@ const LANDMINE_EXEMPT_CHANNELS = env.LANDMINE_EXEMPT_CHANNELS?.split(",") ?? [];
 
 @Discord()
 export abstract class Landmine {
-  readonly #PERCENTAGE = 1;
-
   readonly #TIMEOUT = 5;
 
   #randomValues = new Uint32Array(32);
 
   #randomInts: number[] = [];
+
+  readonly #DUDS = new Map<string, number>();
 
   #rng(): number {
     if (this.#randomInts.length === 0) {
@@ -37,8 +37,16 @@ export abstract class Landmine {
     if (!message.member) return;
     if (LANDMINE_EXEMPT_CHANNELS.includes(message.channelId)) return;
 
-    const rng = this.#rng();
-    if (rng > this.#PERCENTAGE / 100) return;
+    const rng = this.#rng() * 3_000;
+    const duds = this.#DUDS.get(message.author.id) ?? 1;
+    const trigger = rng < duds;
+
+    if (!trigger) {
+      this.#DUDS.set(message.author.id, duds + 1);
+      return;
+    }
+
+    this.#DUDS.delete(message.author.id);
 
     try {
       if (!message.member.moderatable) {
