@@ -16,12 +16,12 @@
   },
   "devDependencies": {
     "@luludev/eslint-config": "^0.8.0",
-    "@types/node": "^24.10.1",
-    "eslint": "^9.39.1",
+    "@types/node": "^25.0.3",
+    "eslint": "^9.39.2",
     "nodemon": "^3.1.11",
-    "prettier": "^3.7.3",
+    "prettier": "^3.7.4",
     "rimraf": "^6.1.2",
-    "tsdown": "0.17.0-beta.3",
+    "tsdown": "0.18.1",
     "typescript": "^5.9.3"
   },
   "dependencies": {
@@ -29,7 +29,7 @@
     "@luludev/exit": "^0.2.2",
     "@luludev/jogger": "^0.9.6",
     "discord.js": "^14.25.1",
-    "discordx": "^11.13.2",
+    "discordx": "^11.13.3",
     "execa": "^9.6.1",
     "reflect-metadata": "^0.2.2",
     "ts3-nodejs-library": "^3.5.1"
