@@ -5,6 +5,7 @@ const config = defineConfig((options) => ({
   target: "node24",
   sourcemap: true,
   minify: !options.watch,
+  tsconfig: "./tsconfig.json",
 }));
 
 export default config;
