@@ -1,14 +1,9 @@
 import { exitHook } from "@luludev/exit";
 import { IntentsBitField as Intents } from "discord.js";
 import { Client } from "discordx";
-import { env, IS_DEV } from "~/env.js";
-import {
-  action,
-  rootContext as ctxField,
-  logger,
-  userField,
-} from "~/logger.js";
-import { getVersion } from "~/version.js";
+import { env, IS_DEV } from "~/env";
+import { action, rootContext as ctxField, logger, userField } from "~/logger";
+import { getVersion } from "~/version";
 
 const client = new Client({
   silent: true,
@@ -47,10 +42,7 @@ export const run = async () => {
     environment: IS_DEV ? "dev" : "prod",
   });
 
-  await Promise.all([
-    import("~/commands/index.js"),
-    import("~/handlers/index.js"),
-  ]);
+  await Promise.all([import("~/commands"), import("~/handlers")]);
 
   await client.login(env.TOKEN);
 };

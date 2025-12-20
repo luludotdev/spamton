@@ -1,5 +1,5 @@
 import { execa } from "execa";
-import { env } from "~/env.js";
+import { env } from "~/env";
 
 export const getVersion: () => Promise<string> = async () => {
   if (env.GIT_SHA) return env.GIT_SHA.slice(0, 7);

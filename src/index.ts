@@ -1,13 +1,13 @@
 import "reflect-metadata";
 
 import { exitHook } from "@luludev/exit";
-import { env } from "~/env.js";
-import { action, errorField, flush, logger } from "~/logger.js";
+import { env } from "~/env";
+import { action, errorField, flush, logger } from "~/logger";
 
 const boot = async () => {
   env.validate();
 
-  const { run } = await import("./bot.js");
+  const { run } = await import("./bot");
   await run();
 };
 

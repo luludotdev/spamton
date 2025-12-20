@@ -6,7 +6,7 @@ import {
 import type { Data, Primitive } from "@luludev/jogger";
 import { ChannelType, PartialGroupDMChannel, User } from "discord.js";
 import type { Channel, GuildMember, PartialRecipient, Role } from "discord.js";
-import { env, IS_DEV } from "~/env.js";
+import { env, IS_DEV } from "~/env";
 
 const consoleSink = createConsoleSink({
   debug: IS_DEV,

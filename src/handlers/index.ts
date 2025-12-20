@@ -1,7 +1,7 @@
 import { env } from "~/env";
 
-import "./landmine.js";
+import "./landmine";
 
 if (env.TEAMSPEAK_URI) {
-  await import("./teamspeak.js");
+  await import("./teamspeak");
 }

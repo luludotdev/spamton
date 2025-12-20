@@ -7,7 +7,7 @@ import {
   errorField,
   logger,
   userField,
-} from "~/logger.js";
+} from "~/logger";
 
 const context = ctxField("avatar");
 

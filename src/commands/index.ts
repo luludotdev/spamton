@@ -1,8 +1,8 @@
 import { env } from "~/env";
 
-import "./avatar.js";
-import "./repo.js";
+import "./avatar";
+import "./repo";
 
 if (env.TEAMSPEAK_URI) {
-  await import("./teamspeak.js");
+  await import("./teamspeak");
 }

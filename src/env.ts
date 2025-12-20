@@ -1,4 +1,4 @@
-import "@luludev/env/register.js";
+import "@luludev/env/register";
 import { defineEnvironment, t } from "@luludev/env";
 
 export const env = defineEnvironment({
