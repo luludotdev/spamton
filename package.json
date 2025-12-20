@@ -3,7 +3,7 @@
   "type": "module",
   "main": "./dist/index.mjs",
   "private": true,
-  "packageManager": "pnpm@10.24.0",
+  "packageManager": "pnpm@10.26.1",
   "scripts": {
     "lint": "prettier --check . && eslint src",
     "format": "prettier --write . && eslint src --fix",
