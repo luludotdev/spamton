@@ -33,7 +33,7 @@ export abstract class Avatar {
     if (user === null) {
       await ctx.reply({
         content: "Bot user is unset!",
-        ephemeral: true,
+        flags: ["Ephemeral"],
       });
 
       return;
@@ -43,7 +43,7 @@ export abstract class Avatar {
       await user.setAvatar(avatar.url);
       await ctx.reply({
         content: "Avatar changed!",
-        ephemeral: true,
+        flags: ["Ephemeral"],
       });
 
       logger.info({
@@ -58,7 +58,7 @@ export abstract class Avatar {
 
       await ctx.reply({
         content: "Failed to set avatar!",
-        ephemeral: true,
+        flags: ["Ephemeral"],
       });
     }
   }
