@@ -43,10 +43,11 @@ FROM base AS runner
 WORKDIR /app
 ENV NODE_ENV=production
 
-RUN mkdir /app/logs && \
+RUN mkdir /app/logs && mkdir /app/data && \
   addgroup -g 1001 -S nodejs && \
   adduser -S nodejs -u 1001 && \
-  chown -R nodejs:nodejs /app/logs
+  chown -R nodejs:nodejs /app/logs && \
+  chown -R nodejs:nodejs /app/data
 
 COPY --chown=1001:1001 --from=deps-prod /app/node_modules ./node_modules
 COPY --chown=1001:1001 --from=files /app/ /app/
