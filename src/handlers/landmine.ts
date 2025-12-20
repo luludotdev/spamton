@@ -13,13 +13,27 @@ const LANDMINE_EXEMPT_CHANNELS = env.LANDMINE_EXEMPT_CHANNELS?.split(",") ?? [];
 
 @Discord()
 export abstract class Landmine {
-  readonly #TIMEOUT = 5;
+  // #region instance
+  private static _instance: Landmine | undefined;
 
+  public static get instance(): Landmine {
+    if (!this._instance) throw new Error("Landmine not instantiated");
+    return this._instance;
+  }
+
+  public constructor() {
+    if (Landmine._instance !== undefined) {
+      throw new Error("Landmine already instantiated");
+    }
+
+    Landmine._instance = this;
+  }
+  // #endregion
+
+  // #region rng
   #randomValues = new Uint32Array(32);
 
   #randomInts: number[] = [];
-
-  readonly #DUDS = new Map<string, number>();
 
   #rng(): number {
     if (this.#randomInts.length === 0) {
@@ -30,6 +44,43 @@ export abstract class Landmine {
     const [int] = this.#randomInts.splice(0, 1);
     return int! / 2 ** 32;
   }
+  // #endregion
+
+  // #region landmines
+  public static readonly RNG_UPPER_BOUND: number = 3_000;
+
+  readonly #DUDS = new Map<string, number>();
+
+  public duds(userId: string): number {
+    return this.#DUDS.get(userId) ?? 1;
+  }
+
+  public simulate(start: number, runs = 10_000): number {
+    const results: number[] = [];
+    for (let idx = 0; idx < runs; idx++) {
+      results.push(this.#sim(start));
+    }
+
+    return results.reduce((a, b) => a + b) / results.length;
+  }
+
+  #sim(start: number): number {
+    let count = 0;
+    let duds = start;
+
+    while (true) {
+      count += 1;
+      const rng = this.#rng() * Landmine.RNG_UPPER_BOUND;
+      const trigger = rng < duds;
+      if (trigger) return count;
+
+      duds += 1;
+    }
+  }
+  // #endregion
+
+  // #region event
+  readonly #TIMEOUT = 5;
 
   @On({ event: "messageCreate" })
   public async onMessage([message]: ArgsOf<"messageCreate">) {
@@ -37,7 +88,7 @@ export abstract class Landmine {
     if (!message.member) return;
     if (LANDMINE_EXEMPT_CHANNELS.includes(message.channelId)) return;
 
-    const rng = this.#rng() * 3_000;
+    const rng = this.#rng() * Landmine.RNG_UPPER_BOUND;
     const duds = this.#DUDS.get(message.author.id) ?? 1;
     const trigger = rng < duds;
 
@@ -73,4 +124,5 @@ export abstract class Landmine {
       }
     }
   }
+  // #endregion
 }
