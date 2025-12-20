@@ -54,8 +54,6 @@ export abstract class Landmine {
     } catch {
       this.#DUDS = new Map();
     }
-
-    console.log(this.#DUDS);
   }
   // #endregion
 
