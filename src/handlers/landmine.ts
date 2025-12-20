@@ -1,3 +1,6 @@
+import { readFileSync } from "node:fs";
+import { mkdir, writeFile } from "node:fs/promises";
+import * as path from "node:path";
 import type { ArgsOf } from "discordx";
 import { Discord, On } from "discordx";
 import { env } from "~/env";
@@ -10,6 +13,20 @@ import {
 
 const context = ctxField("landmine");
 const LANDMINE_EXEMPT_CHANNELS = env.LANDMINE_EXEMPT_CHANNELS?.split(",") ?? [];
+const PERSISTENCE_PATH = "./data/landmines.json";
+
+const isRecordStringNumber = (
+  value: unknown,
+): value is Record<string, number> => {
+  if (typeof value !== "object") return false;
+  if (value === null) return false;
+  if (Object.getOwnPropertySymbols(value).length > 0) return false;
+
+  return Object.getOwnPropertyNames(value).every(
+    // @ts-expect-error: record access
+    (prop) => typeof value[prop] === "number",
+  );
+};
 
 @Discord()
 export abstract class Landmine {
@@ -27,6 +44,18 @@ export abstract class Landmine {
     }
 
     Landmine._instance = this;
+
+    try {
+      // eslint-disable-next-line n/no-sync
+      const json = readFileSync(PERSISTENCE_PATH, "utf8");
+      const data: unknown = JSON.parse(json);
+      if (!isRecordStringNumber(data)) throw new TypeError("invalid");
+      this.#DUDS = new Map(Object.entries(data));
+    } catch {
+      this.#DUDS = new Map();
+    }
+
+    console.log(this.#DUDS);
   }
   // #endregion
 
@@ -49,10 +78,18 @@ export abstract class Landmine {
   // #region landmines
   public static readonly RNG_UPPER_BOUND: number = 3_000;
 
-  readonly #DUDS = new Map<string, number>();
+  readonly #DUDS: Map<string, number>;
 
   public duds(userId: string): number {
     return this.#DUDS.get(userId) ?? 1;
+  }
+
+  async #saveDuds(): Promise<void> {
+    await mkdir(path.dirname(PERSISTENCE_PATH), { recursive: true });
+    await writeFile(
+      PERSISTENCE_PATH,
+      JSON.stringify(Object.fromEntries(this.#DUDS)),
+    );
   }
 
   public simulate(start: number, runs = 10_000): number {
@@ -94,10 +131,12 @@ export abstract class Landmine {
 
     if (!trigger) {
       this.#DUDS.set(message.author.id, duds + 1);
+      await this.#saveDuds();
       return;
     }
 
     this.#DUDS.delete(message.author.id);
+    await this.#saveDuds();
 
     try {
       if (!message.member.moderatable) {

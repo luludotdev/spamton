@@ -2,6 +2,7 @@
 
 dist/
 logs/
+data/
 
 .env.local
 .env.development

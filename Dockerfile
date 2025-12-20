@@ -53,6 +53,7 @@ COPY --chown=1001:1001 --from=files /app/ /app/
 
 USER nodejs
 VOLUME ["/app/logs"]
+VOLUME ["/app/data"]
 
 ARG GIT_SHA
 ARG GITHUB_REPO
