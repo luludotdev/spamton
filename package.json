@@ -1,61 +1,39 @@
 {
   "name": "spamton",
+  "private": true,
   "type": "module",
   "main": "./dist/index.mjs",
-  "private": true,
-  "packageManager": "pnpm@10.26.1",
   "scripts": {
-    "lint": "prettier --check . && eslint src",
-    "format": "prettier --write . && eslint src --fix",
-    "fmt": "pnpm run format",
-    "check": "tsc --noEmit --skipLibCheck",
-    "test": "pnpm run check && pnpm run lint",
+    "lint": "oxlint",
+    "format": "oxfmt",
     "build": "tsdown",
-    "dev": "pnpm run build --watch ./src",
-    "debug": "nodemon --watch dist --inspect"
-  },
-  "devDependencies": {
-    "@luludev/eslint-config": "^0.8.0",
-    "@types/node": "^25.0.3",
-    "eslint": "^9.39.2",
-    "nodemon": "^3.1.11",
-    "prettier": "^3.7.4",
-    "rimraf": "^6.1.2",
-    "tsdown": "0.18.1",
-    "typescript": "^5.9.3"
+    "dev": "tsdown --watch ./src",
+    "debug": "node --inspect --watch-path=./dist ."
   },
   "dependencies": {
     "@luludev/env": "^0.6.6",
     "@luludev/exit": "^0.2.2",
     "@luludev/jogger": "^0.9.6",
-    "discord.js": "^14.25.1",
+    "discord.js": "^14.26.4",
     "discordx": "^11.13.3",
     "execa": "^9.6.1",
     "reflect-metadata": "^0.2.2",
-    "ts3-nodejs-library": "^3.5.1"
+    "ts3-nodejs-library": "^3.5.3"
   },
-  "pnpm": {
-    "overrides": {
-      "@stylistic/eslint-plugin": "^5",
-      "@stylistic/eslint-plugin-jsx": "npm:@stylistic/eslint-plugin@^5",
-      "@stylistic/eslint-plugin-ts": "npm:@stylistic/eslint-plugin@^5",
-      "@angular-eslint/eslint-plugin": "-",
-      "@angular-eslint/eslint-plugin-template": "-",
-      "@angular-eslint/template-parser": "-",
-      "astro-eslint-parser": "-",
-      "eslint-plugin-astro": "-",
-      "eslint-plugin-cypress": "-",
-      "eslint-plugin-rxjs": "-",
-      "eslint-plugin-rxjs-angular": "-",
-      "eslint-plugin-svelte3": "-",
-      "eslint-plugin-vue": "-",
-      "vue-eslint-parser": "-"
-    },
-    "onlyBuiltDependencies": [
-      "cpu-features",
-      "esbuild",
-      "ssh2",
-      "unrs-resolver"
-    ]
+  "devDependencies": {
+    "@luludev/configs": "^0.2.0",
+    "@types/node": "^26.1.0",
+    "oxfmt": "^0.58.0",
+    "oxlint": "^1.73.0",
+    "oxlint-tsgolint": "^0.24.0",
+    "tsdown": "0.22.3",
+    "typescript": "^6.0.3"
+  },
+  "devEngines": {
+    "packageManager": {
+      "name": "pnpm",
+      "version": "^11.10.0",
+      "onFail": "download"
+    }
   }
 }
