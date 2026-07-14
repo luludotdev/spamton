@@ -10,6 +10,7 @@
     "lint": "oxlint",
     "format": "oxfmt",
     "build": "tsdown",
+    "test": "tsc --noEmit && pnpm run lint",
     "dev": "tsdown --watch ./src",
     "debug": "node --inspect --watch-path=./dist ."
   },
