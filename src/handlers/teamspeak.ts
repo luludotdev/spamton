@@ -4,7 +4,7 @@ import { ActivityType } from "discord.js";
 import type { ArgsOf } from "discordx";
 import { Discord, On } from "discordx";
 import { ClientType } from "ts3-nodejs-library";
-import { connect } from "~/ts3";
+import { connect } from "#/ts3";
 
 @Discord()
 export abstract class TeamSpeak {
@@ -12,7 +12,7 @@ export abstract class TeamSpeak {
   public onReady([client]: ArgsOf<"clientReady">): void {
     setInterval(() => {
       void this.#setStatus(client);
-    }, 1_000 * 60);
+    }, 1000 * 60);
 
     void this.#setStatus(client);
   }

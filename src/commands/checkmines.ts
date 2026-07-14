@@ -1,8 +1,8 @@
 import type { CommandInteraction, GuildMember } from "discord.js";
 import { ApplicationCommandOptionType as OptionType } from "discord.js";
 import { Discord, Guild, Slash, SlashOption } from "discordx";
-import { env } from "~/env";
-import { Landmine } from "~/handlers/landmine";
+import { env } from "#/env";
+import { Landmine } from "#/handlers/landmine";
 
 const formatter = Intl.NumberFormat("en-GB", {
   style: "percent",

@@ -2,8 +2,8 @@ import type { CommandInteraction } from "discord.js";
 import { time } from "discord.js";
 import { Discord, Guild, Slash } from "discordx";
 import { ClientType } from "ts3-nodejs-library";
-import { env } from "~/env";
-import { connect, parseUsers } from "~/ts3";
+import { env } from "#/env";
+import { connect, parseUsers } from "#/ts3";
 
 const ID_MAP = parseUsers();
 
@@ -33,13 +33,16 @@ export abstract class TS {
     });
 
     const content = clients
-      .map(({ uniqueIdentifier, nickname, away, lastconnected }): string => {
+      .map((client): string => {
+        const { uniqueIdentifier, nickname, lastconnected } = client;
         const discordId = ID_MAP.get(uniqueIdentifier);
-        const user = discordId ? `<@${discordId}>` : nickname;
+        const user = discordId !== undefined ? `<@${discordId}>` : nickname;
 
-        const joined = time(new Date(lastconnected * 1_000), "R");
+        const joined = time(new Date(lastconnected * 1000), "R");
         let line = "* ";
-        if (away) line += "(AFK) ";
+
+        const away: number | boolean = client.away;
+        if ((typeof away === "boolean" && away === true) || away === 1) line += "(AFK) ";
         line += `**${user}** [joined ${joined}]`;
 
         return line;

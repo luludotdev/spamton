@@ -1,12 +1,8 @@
-import {
-  createConsoleSink,
-  createFileSink,
-  createLogger,
-} from "@luludev/jogger";
+import { createConsoleSink, createFileSink, createLogger } from "@luludev/jogger";
 import type { Data, Primitive } from "@luludev/jogger";
 import { ChannelType, PartialGroupDMChannel, User } from "discord.js";
 import type { Channel, GuildMember, PartialRecipient, Role } from "discord.js";
-import { env, IS_DEV } from "~/env";
+import { env, IS_DEV } from "#/env";
 
 const consoleSink = createConsoleSink({
   debug: IS_DEV,
@@ -42,18 +38,14 @@ export const handlerContext = (context: string): Data => ({
   ...rootContext(context),
 });
 
-export const errorField = <T extends Error>(error: T): Data => {
+export const errorField = (error: Error): Data => {
   const fields: Primitive = { type: error.name, message: error.message };
-  const all: Primitive = error.stack
-    ? { ...fields, stack: error.stack }
-    : fields;
+  const all: Primitive = error.stack !== undefined ? { ...fields, stack: error.stack } : fields;
 
   return { error: all };
 };
 
-export const userField: (
-  user: GuildMember | PartialRecipient | User,
-) => Primitive = (userLike) => {
+export const userField: (user: GuildMember | PartialRecipient | User) => Primitive = (userLike) => {
   if (!("id" in userLike)) {
     return { id: "unknown", username: userLike.username };
   }
@@ -63,6 +55,7 @@ export const userField: (
 };
 
 export const channelField = (channel: Channel): Primitive => {
+  // oxlint-disable-next-line typescript/no-unnecessary-condition
   const channelType = ChannelType[channel.type] ?? "unknown";
   const data: Primitive = {
     id: channel.id,
@@ -77,6 +70,7 @@ export const channelField = (channel: Channel): Primitive => {
       };
     }
 
+    // oxlint-disable-next-line typescript/no-non-null-assertion
     return { ...data, recipient: userField(channel.recipient!) };
   }
 
@@ -88,6 +82,7 @@ export const channelField = (channel: Channel): Primitive => {
     return {
       ...data,
       name: `#${channel.name}`,
+      // oxlint-disable-next-line typescript/no-non-null-assertion
       parent: channelField(channel.parent!),
     };
   }

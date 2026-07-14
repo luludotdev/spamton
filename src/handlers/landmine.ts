@@ -3,21 +3,14 @@ import { mkdir, writeFile } from "node:fs/promises";
 import * as path from "node:path";
 import type { ArgsOf } from "discordx";
 import { Discord, On } from "discordx";
-import { env } from "~/env";
-import {
-  commandContext as ctxField,
-  errorField,
-  logger,
-  userField,
-} from "~/logger";
+import { env } from "#/env";
+import { commandContext as ctxField, errorField, logger, userField } from "#/logger";
 
 const context = ctxField("landmine");
 const LANDMINE_EXEMPT_CHANNELS = env.LANDMINE_EXEMPT_CHANNELS?.split(",") ?? [];
 const PERSISTENCE_PATH = "./data/landmines.json";
 
-const isRecordStringNumber = (
-  value: unknown,
-): value is Record<string, number> => {
+const isRecordStringNumber = (value: unknown): value is Record<string, number> => {
   if (typeof value !== "object") return false;
   if (value === null) return false;
   if (Object.getOwnPropertySymbols(value).length > 0) return false;
@@ -28,25 +21,26 @@ const isRecordStringNumber = (
   );
 };
 
+const instanceSymbol = Symbol("landmine.instance");
+
 @Discord()
 export abstract class Landmine {
   // #region instance
-  private static _instance: Landmine | undefined;
+  private static [instanceSymbol]: Landmine | undefined;
 
   public static get instance(): Landmine {
-    if (!this._instance) throw new Error("Landmine not instantiated");
-    return this._instance;
+    if (!this[instanceSymbol]) throw new Error("Landmine not instantiated");
+    return this[instanceSymbol];
   }
 
   public constructor() {
-    if (Landmine._instance !== undefined) {
+    if (Landmine[instanceSymbol] !== undefined) {
       throw new Error("Landmine already instantiated");
     }
 
-    Landmine._instance = this;
+    Landmine[instanceSymbol] = this;
 
     try {
-      // eslint-disable-next-line n/no-sync
       const json = readFileSync(PERSISTENCE_PATH, "utf8");
       const data: unknown = JSON.parse(json);
       if (!isRecordStringNumber(data)) throw new TypeError("invalid");
@@ -58,9 +52,9 @@ export abstract class Landmine {
   // #endregion
 
   // #region rng
-  #randomValues = new Uint32Array(32);
+  readonly #randomValues = new Uint32Array(32);
 
-  #randomInts: number[] = [];
+  readonly #randomInts: number[] = [];
 
   #rng(): number {
     if (this.#randomInts.length === 0) {
@@ -69,12 +63,14 @@ export abstract class Landmine {
     }
 
     const [int] = this.#randomInts.splice(0, 1);
+    // safety: we populate random values above
+    // oxlint-disable-next-line typescript/no-non-null-assertion
     return int! / 2 ** 32;
   }
   // #endregion
 
   // #region landmines
-  public static readonly RNG_UPPER_BOUND: number = 3_000;
+  public static readonly RNG_UPPER_BOUND: number = 3000;
 
   readonly #DUDS: Map<string, number>;
 
@@ -84,10 +80,7 @@ export abstract class Landmine {
 
   async #saveDuds(): Promise<void> {
     await mkdir(path.dirname(PERSISTENCE_PATH), { recursive: true });
-    await writeFile(
-      PERSISTENCE_PATH,
-      JSON.stringify(Object.fromEntries(this.#DUDS)),
-    );
+    await writeFile(PERSISTENCE_PATH, JSON.stringify(Object.fromEntries(this.#DUDS)));
   }
 
   public simulate(start: number, runs = 10_000): number {
@@ -103,6 +96,7 @@ export abstract class Landmine {
     let count = 0;
     let duds = start;
 
+    // oxlint-disable-next-line typescript/no-unnecessary-condition
     while (true) {
       count += 1;
       const rng = this.#rng() * Landmine.RNG_UPPER_BOUND;
@@ -115,7 +109,7 @@ export abstract class Landmine {
   // #endregion
 
   // #region event
-  readonly #TIMEOUT = 5;
+  readonly #TIMEOUT: number = 5;
 
   @On({ event: "messageCreate" })
   public async onMessage([message]: ArgsOf<"messageCreate">) {
@@ -143,7 +137,7 @@ export abstract class Landmine {
           content: `‼️ ${message.author} stepped on a landmine, but it was inactive`,
         });
       } else {
-        await message.member.timeout(this.#TIMEOUT * 60 * 1_000, "landmine");
+        await message.member.timeout(this.#TIMEOUT * 60 * 1000, "landmine");
         await message.reply({
           allowedMentions: { parse: [] },
           content: `💥 ${message.author} stepped on a landmine and has been timed out for ${this.#TIMEOUT} minute${this.#TIMEOUT > 1 ? "s" : ""}`,

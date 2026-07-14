@@ -1,8 +1,7 @@
 import "reflect-metadata";
-
 import { exitHook } from "@luludev/exit";
-import { env } from "~/env";
-import { action, errorField, flush, logger } from "~/logger";
+import { env } from "#/env";
+import { action, errorField, flush, logger } from "#/logger";
 
 const boot = async () => {
   env.validate();

@@ -1,6 +1,6 @@
 import type { CommandInteraction } from "discord.js";
 import { Discord, Guild, Slash } from "discordx";
-import { env } from "~/env";
+import { env } from "#/env";
 
 const repo = env.GITHUB_REPO ?? "luludotdev/spamton";
 

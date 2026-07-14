@@ -1,15 +1,13 @@
 import { execa } from "execa";
-import { env } from "~/env";
+import { env } from "#/env";
 
 export const getVersion: () => Promise<string> = async () => {
-  if (env.GIT_SHA) return env.GIT_SHA.slice(0, 7);
+  if (env.GIT_SHA !== undefined && env.GIT_SHA !== "") {
+    return env.GIT_SHA.slice(0, 7);
+  }
 
   try {
-    const { stdout: gitVersion } = await execa("git", [
-      "rev-parse",
-      "--short",
-      "HEAD",
-    ]);
+    const { stdout: gitVersion } = await execa("git", ["rev-parse", "--short", "HEAD"]);
 
     const { stdout: status } = await execa("git", ["status", "-s"]);
     const dev = status !== "";

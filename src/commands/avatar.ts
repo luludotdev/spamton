@@ -1,13 +1,8 @@
 import type { Attachment, CommandInteraction } from "discord.js";
 import { ApplicationCommandOptionType as OptionType } from "discord.js";
 import { Discord, Guild, Slash, SlashOption } from "discordx";
-import { env } from "~/env";
-import {
-  commandContext as ctxField,
-  errorField,
-  logger,
-  userField,
-} from "~/logger";
+import { env } from "#/env";
+import { commandContext as ctxField, errorField, logger, userField } from "#/logger";
 
 const context = ctxField("avatar");
 
@@ -30,14 +25,6 @@ export abstract class Avatar {
     ctx: CommandInteraction,
   ) {
     const { user } = ctx.client;
-    if (user === null) {
-      await ctx.reply({
-        content: "Bot user is unset!",
-        flags: ["Ephemeral"],
-      });
-
-      return;
-    }
 
     try {
       await user.setAvatar(avatar.url);

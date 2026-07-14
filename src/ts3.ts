@@ -1,5 +1,5 @@
 import { QueryProtocol, TeamSpeak as TeamSpeakBase } from "ts3-nodejs-library";
-import { env } from "~/env";
+import { env } from "#/env";
 
 // #region Connection Info
 type TeamSpeakConnectInfo = {
@@ -20,10 +20,7 @@ const parseProtocol = (type: string): TeamSpeakBase.QueryProtocol => {
   throw new TypeError(`unsupported protocol: ${type}`);
 };
 
-const parseQueryPort = (
-  port: string,
-  protocol: TeamSpeakBase.QueryProtocol,
-): number => {
+const parseQueryPort = (port: string, protocol: TeamSpeakBase.QueryProtocol): number => {
   if (port === "") {
     return protocol === QueryProtocol.RAW ? 10_011 : 10_022;
   }
@@ -72,7 +69,10 @@ const parseConnectionInfo = (uri: URL | string): TeamSpeakConnectInfo => {
 // #endregion
 
 // #region Connect
-const info = parseConnectionInfo(env.TEAMSPEAK_URI!);
+const uri = env.TEAMSPEAK_URI;
+if (uri === undefined || uri === "") throw new Error("missing TEAMSPEAK_URI");
+
+const info = parseConnectionInfo(uri);
 export const connect = async (): Promise<TeamSpeak> => {
   const ts = await TeamSpeakBase.connect(info);
 
@@ -83,18 +83,17 @@ export const connect = async (): Promise<TeamSpeak> => {
   });
 };
 
-export interface TeamSpeak extends TeamSpeakBase {
+export type TeamSpeak = {
   [Symbol.asyncDispose]: () => Promise<void>;
-}
+} & TeamSpeakBase;
 // #endregion
 
 // #region User Map
 export const parseUsers = (): Map<string, string> => {
-  if (!env.TEAMSPEAK_USERS) return new Map();
+  if (env.TEAMSPEAK_USERS === undefined) return new Map();
+  if (env.TEAMSPEAK_USERS === "") return new Map();
 
-  const pairs = env.TEAMSPEAK_USERS.split(" ").map(
-    (pair) => pair.split(":") as string[],
-  );
+  const pairs = env.TEAMSPEAK_USERS.split(" ").map((pair) => pair.split(":") as string[]);
 
   const valid = pairs.map((pair) => pair.length === 2).every(Boolean);
   if (!valid) throw new Error("invalid teamspeak users");
