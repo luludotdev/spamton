@@ -3,6 +3,9 @@
   "private": true,
   "type": "module",
   "main": "./dist/index.mjs",
+  "imports": {
+    "#/*": "./src/*"
+  },
   "scripts": {
     "lint": "oxlint",
     "format": "oxfmt",
@@ -14,20 +17,20 @@
     "@luludev/env": "^0.6.6",
     "@luludev/exit": "^0.2.2",
     "@luludev/jogger": "^0.9.6",
-    "discord.js": "^14.26.4",
+    "discord.js": "^14.26.5",
     "discordx": "^11.13.3",
     "execa": "^9.6.1",
     "reflect-metadata": "^0.2.2",
     "ts3-nodejs-library": "^3.5.3"
   },
   "devDependencies": {
-    "@luludev/configs": "^0.2.0",
-    "@types/node": "^26.1.0",
-    "oxfmt": "^0.58.0",
-    "oxlint": "^1.73.0",
+    "@luludev/configs": "^0.2.1",
+    "@types/node": "^24.13.3",
+    "oxfmt": "^0.59.0",
+    "oxlint": "^1.74.0",
     "oxlint-tsgolint": "^0.24.0",
-    "tsdown": "0.22.3",
-    "typescript": "^6.0.3"
+    "tsdown": "^0.22.7",
+    "typescript": "^7.0.2"
   },
   "devEngines": {
     "packageManager": {

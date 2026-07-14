@@ -1,50 +1,45 @@
 {
-  "$schema": "http://json.schemastore.org/tsconfig",
+  // Visit https://aka.ms/tsconfig to read more about this file
   "compilerOptions": {
-    // Type Checking
-    "allowUnreachableCode": false,
-    "allowUnusedLabels": false,
-    "exactOptionalPropertyTypes": true,
-    "noFallthroughCasesInSwitch": true,
-    "noImplicitOverride": true,
-    "noImplicitReturns": true,
-    "noUnusedLocals": true,
-    "noUnusedParameters": true,
-    "strict": true,
-    "useUnknownInCatchVariables": true,
-    "noUncheckedIndexedAccess": true,
+    // Environment Settings
+    // See also https://aka.ms/tsconfig/module
+    "module": "esnext",
+    "moduleResolution": "bundler",
+    "target": "esnext",
+    "lib": ["esnext"],
+    "types": ["node"],
 
-    // Modules
-    "module": "ESNext",
-    "moduleResolution": "Bundler",
-    "resolveJsonModule": true,
-    "allowImportingTsExtensions": true,
-
-    // Emit
-    "noEmit": true,
+    // Other Outputs
+    "sourceMap": true,
     "declaration": true,
     "declarationMap": true,
-    "importHelpers": false,
-    "noEmitHelpers": false,
-    "inlineSources": true,
-    "newLine": "lf",
-    "outDir": "dist",
-    "preserveConstEnums": true,
-    "removeComments": false,
-    "sourceMap": true,
-    "esModuleInterop": true,
-    "forceConsistentCasingInFileNames": true,
 
-    // Language and Environment
-    "emitDecoratorMetadata": true,
+    // Stricter Typechecking Options
+    "noUncheckedIndexedAccess": true,
+    "exactOptionalPropertyTypes": true,
+
+    // Style Options
+    "noImplicitReturns": true,
+    "noImplicitOverride": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "noFallthroughCasesInSwitch": true,
+    "noPropertyAccessFromIndexSignature": true,
+
+    // Recommended Options
+    "strict": true,
+    "verbatimModuleSyntax": true,
+    "isolatedModules": true,
+    "noUncheckedSideEffectImports": true,
+    "moduleDetection": "force",
+    "skipLibCheck": true,
+
+    // Decorators
     "experimentalDecorators": true,
-    "lib": ["ESNext"],
-    "target": "ES2024",
-    "useDefineForClassFields": true,
 
     // Path Resolution
     "paths": {
-      "~/*": ["./src/*"]
+      "#/*": ["./src/*"]
     }
   }
 }

@@ -1,3 +1,10 @@
 allowBuilds:
   cpu-features: true
   ssh2: true
+
+minimumReleaseAgeExclude:
+  - "@oxfmt/binding-*"
+  - "@oxlint/binding-*"
+  - oxfmt
+  - oxlint
+  - "@luludev/configs"

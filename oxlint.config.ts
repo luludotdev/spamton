@@ -6,5 +6,8 @@ export default defineConfig({
   globals: {
     es2024: "readonly",
   },
-  rules: {},
+  rules: {
+    "new-cap": "off",
+    "typescript/restrict-template-expressions": "off",
+  },
 });
