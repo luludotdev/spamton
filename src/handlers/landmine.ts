@@ -70,7 +70,7 @@ export abstract class Landmine {
   // #endregion
 
   // #region landmines
-  public static readonly RNG_UPPER_BOUND: number = 3000;
+  public static readonly RNG_UPPER_BOUND: number = 4000;
 
   readonly #DUDS: Map<string, number>;
 
@@ -109,7 +109,7 @@ export abstract class Landmine {
   // #endregion
 
   // #region event
-  readonly #TIMEOUT: number = 5;
+  readonly #TIMEOUT: number = 2;
 
   @On({ event: "messageCreate" })
   public async onMessage([message]: ArgsOf<"messageCreate">) {
