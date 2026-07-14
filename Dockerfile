@@ -3,12 +3,12 @@ FROM node:24-alpine AS base
 FROM base AS pnpm
 ENV PNPM_HOME="/pnpm"
 ENV PATH="$PNPM_HOME:$PATH"
-RUN npm i -g corepack && corepack enable && corepack prepare pnpm@latest-10 --activate
+RUN npm i -g corepack && corepack enable && corepack prepare pnpm@latest-11 --activate
 
 # ---
 FROM pnpm AS deps-base
 WORKDIR /app
-COPY ./pnpm-lock.yaml ./
+COPY ./pnpm-workspace.yaml ./pnpm-lock.yaml ./
 
 # ---
 FROM deps-base AS deps-dev
