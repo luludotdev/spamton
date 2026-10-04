@@ -3,7 +3,7 @@ FROM node:24-alpine AS base
 FROM base AS pnpm
 ENV PNPM_HOME="/pnpm"
 ENV PATH="$PNPM_HOME:$PATH"
-RUN npm i -g corepack && corepack enable && corepack prepare pnpm@latest-11 --activate
+RUN npm i -g corepack && corepack enable && corepack prepare pnpm@latest-12 --activate
 
 # ---
 FROM pnpm AS deps-base
