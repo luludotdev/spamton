@@ -54,7 +54,11 @@ const parseConnectionInfo = (uri: URL | string): TeamSpeakConnectInfo => {
   const serverport = parseServerPort(params.get("serverport"));
   const username = params.get("username") ?? undefined;
   const password = params.get("password") ?? undefined;
-  const nickname = params.get("nickname") ?? undefined;
+  const nickname = params.get("nickname") ?? "Spamton";
+
+  if (serverport === undefined) throw new Error("missing server port");
+  if (username === undefined) throw new Error("missing username");
+  if (password === undefined) throw new Error("missing password");
 
   return {
     host,
@@ -64,7 +68,7 @@ const parseConnectionInfo = (uri: URL | string): TeamSpeakConnectInfo => {
     username,
     password,
     nickname,
-  } as TeamSpeakConnectInfo;
+  } satisfies TeamSpeakConnectInfo;
 };
 // #endregion
 
@@ -93,11 +97,12 @@ export const parseUsers = (): Map<string, string> => {
   if (env.TEAMSPEAK_USERS === undefined) return new Map();
   if (env.TEAMSPEAK_USERS === "") return new Map();
 
-  const pairs = env.TEAMSPEAK_USERS.split(" ").map((pair) => pair.split(":") as string[]);
-
-  const valid = pairs.map((pair) => pair.length === 2).every(Boolean);
+  const pairs = env.TEAMSPEAK_USERS.split(" ").map((pair) => pair.split(":"));
+  const valid = pairs.map((pair): pair is [string, string] => pair.length === 2).every(Boolean);
   if (!valid) throw new Error("invalid teamspeak users");
 
+  // checked above
+  // oxlint-disable-next-line typescript/no-unsafe-type-assertion
   return new Map(pairs as [string, string][]);
 };
 // #endregion
