@@ -1,4 +1,4 @@
-import { execa } from "execa";
+import { x } from "tinyexec";
 import { env } from "#/env";
 
 export const getVersion: () => Promise<string> = async () => {
@@ -7,12 +7,11 @@ export const getVersion: () => Promise<string> = async () => {
   }
 
   try {
-    const { stdout: gitVersion } = await execa("git", ["rev-parse", "--short", "HEAD"]);
-
-    const { stdout: status } = await execa("git", ["status", "-s"]);
+    const { stdout: gitVersion } = await x("git", ["rev-parse", "--short", "HEAD"]);
+    const { stdout: status } = await x("git", ["status", "-s"]);
     const dev = status !== "";
 
-    return dev ? `${gitVersion} (dev)` : gitVersion;
+    return dev ? `${gitVersion.trim()} (dev)` : gitVersion.trim();
   } catch (error) {
     console.log(error);
     return "unknown";
